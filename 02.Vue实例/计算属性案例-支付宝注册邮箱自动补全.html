@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  
+  <!-- <div id="app" @click="num++" > -->
+  <div id="app" >
+    <input type="text" v-model="iptVal" @keyup="showUl">
+    <ul v-show="isShow">
+      <li v-for="(mail,index) in mailList" :key="index" @click="selectMail(mail)">{{ mail }}</li>
+    </ul>
+        
+  </div>
+  <script>
+    
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        iptVal:'',
+        isShow: false
+      },
+      computed:{
+        mailList(){
+          const arr = ["qq.com", "163.com", "126.net", "gmail.com", "189.cn", "263.net"]
+          return arr.map( item => this.iptVal + '@' + item  )
+        }
+      },
+      methods:{
+        showUl(){
+          this.isShow = true
+        },
+        selectMail(mail){
+          this.iptVal = mail
+          this.isShow = false
+        }
+      }    
+    })
+  </script>
+</body>
+</html>
