@@ -48,6 +48,7 @@
         }
       },
       mounted() {
+        /* 不能监听到 */
         this.$on('send-msg', val=>{
           console.log('子组件自定义事件 接收：',val);
         })
