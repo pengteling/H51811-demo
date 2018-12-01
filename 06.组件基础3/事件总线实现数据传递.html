@@ -9,6 +9,7 @@
 </head>
 <body>
   <div id="demo">    
+    {{ msg }}
     <component-a></component-a>      
   </div> 
   <template id="compa2">
@@ -20,8 +21,9 @@
 
   <template id="compb">
     <div>
-      这是根组件传递的数组
-      {{ pmsg8.msg }}
+      
+      {{ msg }}
+      <button @click="handlerClick">向根组件传递数据</button>
     </div>
   </template>
 
@@ -29,6 +31,8 @@
   
 
   <script>
+
+    var EventBus = new Vue()
     
     Vue.component('componentA',{        
       template:'#compa2',
@@ -36,59 +40,39 @@
     })
     Vue.component('componentB',{
       template:'#compb',
-      // inject:['pmsg','pmsg2']
-      inject:{
-        pmsg3:{
-          from:'pmsg'
-        },
-        pmsg4:{
-          default(){
-            return{
-              msg:'test'
-            }
-          }
-        },
-        pmsg8:{
-          
+      data(){
+        return{
+          msg:'12345'
         }
-        
+      },
+      methods:{
+        handlerClick(){
+          EventBus.$emit('get-data', this.msg)
+        }
       }
+      
     })
     var vm = new Vue({
       el:'#demo',
       // data:{     
       //   msg:'hi,vue'   
-      // }
-      // provide:{
-      //   pmsg:'AAA',
-      //   pmsg2:this.msg
-      // },   
-      provide(){
-        const data = {}
-        Object.defineProperty(data,'msg',{
-          enumerable:true,
-          // 这里要用箭头函数 this指向vue实例
-          get:()=>this.msg
-          // get(){
-          //   return this.msg
-          // }
-        })
-
-        return{
-          pmsg:this.msg,
-          pmsg2:this.msg,
-          pmsg8:data
-          // pmsg4:{
-          //   name:'zs'
-          // }
-        }
-        
-      },      
+      // }        
       data(){
         return{
-          msg:'test'
+          msg:''
         }
-      }
+      },
+      // methods:{
+      //   getData(val){
+      //     this.msg = val
+      //   }
+      // },
+      mounted() {
+        EventBus.$on('get-data',val => {
+          // this.getData(val)
+          this.msg = val
+        })
+      },
     })
   </script>
 </body>
