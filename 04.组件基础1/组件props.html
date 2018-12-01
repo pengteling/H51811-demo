@@ -59,14 +59,17 @@
           // default:{
           //   count:0
           // }
+          /* 默认值为对象或数组时，必须写成函数 (类似于组件的data) */
           default(){
+            //这里拿不到实例的属性
             return{
               count:0
             }
           }
         },
         prop6:{
-          validator(val){
+          validator(val){   
+            //这里拿不到实例的属性 如this.aaa         
             return val>10
           }
         }
@@ -76,7 +79,7 @@
       el:'#demo',
       // data:{     
       //   msg:'hi,vue'   
-      // }      
+      // }        
       data(){
         return{
           msg:'hi,vue'
