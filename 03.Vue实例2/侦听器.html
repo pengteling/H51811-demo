@@ -75,6 +75,15 @@
       }
 
     })
+    var unwatch = vm.$watch('firstName',(newVal,oldVal)=>{
+
+    },{
+      deep:true,
+      immediate:true
+    })
+    
+    //取消侦听
+    unwatch()
   </script>
 </body>
 </html>

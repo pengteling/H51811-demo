@@ -23,8 +23,14 @@
         handlerClick(){
           this.msg = 456
           console.log(this.$el.textContent)
-          //dom并不是同步更新
-          this.$nextTick(()=>{
+          // setTimeout(()=>{
+          //   console.log(this.$el.textContent)
+          // },1000)
+          // //dom并不是同步更新
+          // this.$nextTick(()=>{
+          //   console.log(this.$el.textContent)
+          // })
+          this.$nextTick().then(()=>{
             console.log(this.$el.textContent)
           })
         }
