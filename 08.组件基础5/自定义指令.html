@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue.js</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="demo" v-background:color.a.b="'red'">
+    {{ msg }}
+    <comp-a></comp-a>
+  </div>
+
+  <script>
+    // Vue.directive('background', (el, binding)=>{
+    //   el.style.backgroundColor = '#' + (Math.random()+'').substr(2,6)
+    // })
+    Vue.directive('background',{
+      bind:function(el,binding,vnode){
+        el.style.backgroundColor = '#' + (Math.random()+'').substr(2,6)
+        console.log(binding.value)
+        console.log(binding.arg)
+        console.log(binding.modifiers)
+        console.log(el.parentNode)
+        console.log(vnode)
+      },
+      inserted:function(el,binding){
+        console.log(el.parentNode)
+      },
+    })
+    var vm = new Vue({
+      el:'#demo',
+      data:{
+        msg:'Hi,vue'
+      },
+      components:{
+        compA:{
+          template:'<p>comp-a</p>'
+        }
+      }
+      // directives:{
+
+      // }
+    })
+  </script>
+</body>
+</html>
