@@ -7,6 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>vue.js</title>
   <script src="https://unpkg.com/vue"></script>
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
   <style>
     .container {
 
@@ -30,7 +32,7 @@
       max-width: 800px;
     }
 
-    .slider-enter-active,
+    /* .slider-enter-active,
     .slider-leave-active {
       transition: all 1s
     }
@@ -92,14 +94,14 @@
 
     .slider2-leave {
       transform: translate3d(0, 0, 0);
-    }
+    } */
   </style>
 </head>
 
 <body>
   <div id="demo">
     <div class="container">
-      <transition-group :name="effect" ref="trans">
+      <transition-group :name="effect" @before-enter="beforeEnter" @enter="enter" @leave="leave">
         <div v-for="(item,index) in banners" :key="index" class="slider" v-show="index === curIndex" @mousemove="stop"
           @mouseout="autoplay">
           <a :href="item.sourceUrl">
@@ -120,7 +122,8 @@
       data: {
         // timer,
         effect: 'slider',
-        canClick: false,
+        animateEl1: '',
+        animateEl2: '',
         curIndex: 0,
         banners: [{
             sourceUrl: 'https://i1.mifile.cn/a4/xmad_15234553192824_sTkYv.jpg',
@@ -137,16 +140,37 @@
         ]
       },
       methods: {
+        beforeEnter(el) {
+          $(el).velocity({
+            opacity: 0,
+            left: this.effect === 'slider' ? '100%' : '-100%'
+          }, {
+            duration: 0
+          })
+        },
+        enter(el, done) {
+          this.animateEl1 = el
+          $(el).velocity({
+            opacity: 1,
+            left: 0
+          }, {
+            duration: 1000,
+            complete: () => this.animateEl1 = ''
+          })
+        },
+        leave(el, done) {
+          this.animateEl2 = el
+          $(el).velocity({
+            opacity: 0,
+            left: this.effect === 'slider' ? '-100%' : '100%'
+          }, {
+            duration: 1000,
+            complete: () => this.animateEl2 = ''
+          })
+        },
         autoplay() {
           this.timer = setInterval(() => {
             this.curIndex = this.curIndex >= this.banners.length - 1 ? 0 : this.curIndex + 1
-
-            console.log(this.$refs.trans.children[this.curIndex].elm)
-            let elm = this.$refs.trans.children[this.curIndex].elm
-            this.canClick = false
-            elm.addEventListener("transitionend", () => {
-              this.canClick = true
-            })
           }, 3000)
 
         },
@@ -154,10 +178,19 @@
           clearInterval(this.timer)
         },
         prev() {
-          if (this.canClick) {
 
-            this.canClick = false
-            clearInterval(this.timer)
+          if (this.animateEl1) {
+            // Velocity(this.animateEl, 'finish')
+            // 快速点击时 让上次未完成的动画马上完成
+            $(this.animateEl1).velocity("finish")
+            $(this.animateEl2).velocity("finish")
+            this.animateEl1 = ''
+            this.animateEl2 = ''
+            console.log("立即结束动画")
+          } else {
+
+
+            this.stop()
             this.effect = 'slider'
             this.curIndex--
             if (this.curIndex < 0) {
@@ -165,16 +198,26 @@
             }
             this.autoplay()
           }
+
         },
         next() {
-          if (this.canClick) {
+          if (this.animateEl2) {
+            $(this.animateEl1).velocity("finish")
+            $(this.animateEl2).velocity("finish")
+            this.animateEl1 = ''
+            this.animateEl2 = ''
+            console.log("立即结束动画")
+          } else {
 
+
+            this.stop()
             this.canClick = false
-            clearInterval(this.timer)
+
             this.effect = 'slider2'
             this.curIndex = this.curIndex >= this.banners.length - 1 ? 0 : this.curIndex + 1
             this.autoplay()
           }
+
         }
       },
       mounted() {
