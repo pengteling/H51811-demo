@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue.js</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+    .container{
+      
+      position: relative;
+      width: 800px;
+      height:400px;
+      margin:0 auto;
+      overflow: hidden;
+
+    }
+    .slider{
+      position: absolute;
+    }
+    .slider img{
+      max-width: 800px;
+    }
+    .slider-enter-active,.slider-leave-active{
+      transition:all 1s
+    }
+    .slider-enter,.slider-leave-to{
+      
+      opacity: 0;
+    }
+    .slider-enter{
+      transform: translate3d(-100%,0,0);
+    }
+    .slider-leave-to{
+      transform: translate3d(100%,0,0);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo">
+    <div class="container">
+      <transition-group name="slider">
+        <div v-for="(item,index) in banners" :key="index" class="slider" v-show="index === curIndex">
+          <a :href="item.sourceUrl">
+            <img :src="item.imgUrl" alt="">
+          </a>
+        </div>
+      </transition-group>
+    </div>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#demo',
+      data: {
+        curIndex:0,
+        banners: [{
+            sourceUrl: 'https://i1.mifile.cn/a4/xmad_15234553192824_sTkYv.jpg',
+            imgUrl: 'https://i1.mifile.cn/a4/xmad_15234553192824_sTkYv.jpg'
+          },
+          {
+            sourceUrl: 'https://i1.mifile.cn/a4/xmad_1523852977495_RedjU.jpg',
+            imgUrl: 'https://i1.mifile.cn/a4/xmad_1523852977495_RedjU.jpg'
+          },
+          {
+            sourceUrl: 'https://i1.mifile.cn/a4/xmad_15239326176265_HDrpS.jpg',
+            imgUrl: 'https://i1.mifile.cn/a4/xmad_15239326176265_HDrpS.jpg'
+          }
+        ]
+      },
+      methods:{
+        autoplay(){
+          setInterval(()=>{
+            this.curIndex = this.curIndex >= this.banners.length - 1 ? 0 :  this.curIndex  + 1
+          },3000)
+        }
+      },
+      mounted() {
+        this.autoplay()
+      }
+    })
+  </script>
+</body>
+
+</html>

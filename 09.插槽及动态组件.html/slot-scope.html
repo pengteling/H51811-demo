@@ -13,11 +13,11 @@
   <div id="demo">
     <comp-a>
       <!-- <template slot-scope="props"> -->
-      <div slot-scope="props">
+      <div slot-scope="{prop1,data}">
         <ul>
-          <li v-for="item in props.data">{{ item }}</li>
+          <li v-for="item in data">{{ item }}</li>
         </ul>
-        <p>{{ props.prop1 }}</p>
+        <p>{{ prop1 }}</p>
         <p>{{ msg }}</p>
       </div>
       <!-- </template> -->
