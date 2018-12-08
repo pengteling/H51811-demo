@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue.js</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="demo">
+    <!-- <comp-one></comp-one> -->
+  </div>
+
+  <script>
+    const compOne = {
+      name:'compOne',
+      // template:`
+      // <div :style="styleObj" prop2="test">
+      //   <slot></slot>
+      // </div>
+      // `,
+      render(h){
+        // this.$createElement
+        return h(
+          'div',
+          {
+            style: this.styleObj,
+            prop2: "test"
+          },
+          // this.$slots
+          // [
+          //   this.$slots.default[0]
+          // ]
+          [
+            this.$slots.default,
+            this.$slots.slot1,
+          ]
+        )
+      },
+      data(){
+        return {
+          styleObj:{
+            color:'red',
+            fontSize:'100px'
+          }
+        }
+      }
+    }
+    var vm = new Vue({
+      el:'#demo',
+      data:{
+        count:123
+      },
+      template:`
+      <comp-one prop1="prop1" @click="count++" ref="comp1">
+        <span> {{ count }} </span>
+        <span slot="slot1">具名插槽2的内容</span>
+        <span slot="slot1">具名插槽3的内容</span>
+      </comp-one>
+      `,
+      components:{
+        compOne:compOne
+      }
+    })
+  </script>
+</body>
+</html>
