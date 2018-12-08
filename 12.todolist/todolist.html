@@ -13,25 +13,42 @@
     <section class="todoapp">
       <header class="header">
         <h1>todos</h1>
-        <input type="text" class="new-todo" placeholder="what needs to be done?" @keyup.enter="addTodo" ref="ipt">
+        <input 
+          type="text" 
+          class="new-todo" 
+          placeholder="what needs to be done?" 
+          @keyup.enter="addTodo" 
+          ref="ipt"
+        >
       </header>
 
       <section class="main">
-        <input id="toggle-all" type="checkbox" class="toggle-all" v-model="checkAll">
+        <input 
+          id="toggle-all" 
+          type="checkbox" 
+          class="toggle-all" 
+          v-model="checkAll"
+        >
         <!-- label用来显示全选按钮 -->
         <label for="toggle-all"></label>
         <ul class="todo-list">
           <item 
-            v-for="(todo,index) in todos" 
+            v-for="(todo,index) in todosView" 
             :todo="todo" 
             :key="index"
-            @delete-todo="deleteTodo"
-          >
+            @delete-todo="deleteTodo">
           </item>
         </ul>
       </section>
 
-      <tabs :filter="filter"></tabs>
+      <tabs 
+        :filter="filter"
+        :items-left-count="itemsLeftCount"
+        :is-have-completed="isHaveCompleted"
+        @toggle-filter="toggleFilter"
+        @clear-completed="clearCompleted"
+
+      ></tabs>
       
     </section>
   </div>
@@ -39,7 +56,11 @@
   <template id="item">
     <li :class="{editing: isEditing, completed:todo.isCompleted}">
       <div class="view">
-        <input type="checkbox" v-model="todo.isCompleted" class="toggle">
+        <input 
+          type="checkbox" 
+          v-model="todo.isCompleted" 
+          class="toggle"
+        >
         <label @dblclick="editTodo">{{ todo.content }}</label>
         <button class="destroy" @click="deleteTodo"></button>
       </div>
@@ -59,23 +80,27 @@
   <template id="tabs">
     <footer class="footer">
       <span class="todo-count">
-        <strong>4</strong>
+        <strong>{{ itemsLeftCount }}</strong>
         <span> </span>
         <span>item</span>
         <span> left</span>
       </span>
-      <ul>
+      <ul class="filters">
         <li
          v-for="state in states"  
          :key="state"       
         >
-          <a :class="{'selected': state === filter}">
+          <a :class="{'selected': state === filter}" @click="toggleFilter(state)">
             {{ state }}
           </a>
           <span> </span>
         </li>
       </ul>
-      <button>Clear Completed</button>
+      <button 
+        class="clear-completed"
+        v-show="isHaveCompleted"
+        @click="clearCompleted"
+      >Clear Completed</button>
 
       
 
@@ -116,10 +141,18 @@
     })
     Vue.component('Tabs',{
       template:'#tabs',
-      props:['filter'],
+      props:['filter','itemsLeftCount','isHaveCompleted'],
       data(){
         return {
-          states:["All","Active","Completed"]
+          states:['All','Active','Completed']
+        }
+      },
+      methods:{
+        toggleFilter(state){
+          this.$emit('toggle-filter',state)
+        },
+        clearCompleted(){
+          this.$emit('clear-completed')
         }
       }
     })
@@ -127,18 +160,19 @@
       el:'#demo',
       data:{
         todos:[
-          {
+          /* {
             content:'写代码',
             isCompleted:false
           },
           {
             content:'吃饭',
             isCompleted:true
-          },
+          }, */
         ],
         filter:'All'
       },
       computed:{
+        /* 双向绑定 计算属性 实现全选反选功能 */
         checkAll:{
           get(){
             return this.todos.every(todo => todo.isCompleted)
@@ -146,6 +180,21 @@
           set(val){
             this.todos.forEach(todo=> todo.isCompleted = val)
           }
+        },
+        itemsLeftCount(){
+          return this.todos.reduce((t,todo)=>todo.isCompleted ? t : t+ 1, 0)
+        },
+        todosView(){
+          if(this.filter === 'All'){
+            return this.todos
+          } else if (this.filter === 'Active'){
+            return this.todos.filter(todo=>!todo.isCompleted )
+          } else {
+            return this.todos.filter(todo=>todo.isCompleted )
+          }
+        },
+        isHaveCompleted(){
+          return this.todos.some( todo => todo.isCompleted)
         }
       },
       methods:{
@@ -160,8 +209,32 @@
         deleteTodo(todo){
           this.todos.splice(this.todos.findIndex( item=>item === todo),1)
           // this.todos = this.todos.filter(item=>item !== todo)
+        },
+        toggleFilter(state){
+          this.filter = state
+        },
+        clearCompleted(){
+          this.todos = this.todos.filter( todo => !todo.isCompleted )
+        },
+        saveData(){
+          localStorage.setItem('filter',this.filter)
+          localStorage.setItem('todos',JSON.stringify(this.todos))
+        },
+        getData(){
+          if(localStorage.getItem('todos')){
+            this.todos = JSON.parse(localStorage.getItem('todos'))
+          }
+          if(localStorage.getItem('filter')){
+            this.filter = localStorage.getItem('filter')
+          }
         }
-      }
+      },
+      updated() {
+        this.saveData()
+      },
+      created() {
+        this.getData()
+      },
     })
   </script>
 </body>
