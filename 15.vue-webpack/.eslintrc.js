@@ -10,6 +10,7 @@ module.exports = {
       "browser":true
     },
     "parserOptions":{
+      "parser": "babel-eslint",
       "ecmaVersion":6,
       "sourceType":"module",
       "ecmaFeatures":{
@@ -17,6 +18,7 @@ module.exports = {
       }
     },
     "rules":{
-      "semi": 0
+      "semi": 0,
+      "linebreak-style": 0
     }
 };

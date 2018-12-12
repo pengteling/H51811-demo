@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
-.app{
-  color:red
+.app {
+  color: red
 }
 </style>

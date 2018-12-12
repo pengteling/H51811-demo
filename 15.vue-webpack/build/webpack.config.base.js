@@ -22,6 +22,7 @@ module.exports = {
         exclude: /node_modules/,
         include:[path.resolve(__dirname,'../src')],
         options:{
+          fix:true,
           formatter: require('eslint-friendly-formatter')
         }
       },
