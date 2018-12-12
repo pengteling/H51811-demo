@@ -17,6 +17,7 @@ module.exports = {
       }
     },
     "rules":{
-      "semi": 0
+      "semi": 0,
+      "vue/require-prop-types":"off"
     }
 };
