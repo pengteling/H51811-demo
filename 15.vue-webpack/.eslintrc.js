@@ -18,6 +18,7 @@ module.exports = {
     },
     "rules":{
       "semi": 0,
-      "vue/require-prop-types":"off"
+      "vue/require-prop-types":"off",
+      "linebreak-style":0,
     }
 };
