@@ -1,19 +1,34 @@
 <template>
-  <div>
+  <div :class="classNames.app">
     <img src="./images/123.png">
     <!-- <img src="~vue/images/123.png"> -->
+    <Child />
   </div>
 </template>
 <script>
 // import './node_modules/bootstrap/css/bootstrap.css'
 // import '~bootstrap/css/bootstrap.css'
-export default {
 
+import Child from './components/Child.vue'
+import classNames from './style/app.css'
+
+export default {
+  components: {
+    Child,
+  },
+  // data() {
+  //   return {
+  //     classNames,
+  //   }
+  // },
+  computed: {
+    classNames() {
+      return classNames
+    },
+  },
+  mounted() {
+    console.log(this.$style)
+    console.log(classNames)
+  },
 }
 </script>
-
-<style lang="scss">
-div{
-  background: url(./images/123.png)
-}
-</style>

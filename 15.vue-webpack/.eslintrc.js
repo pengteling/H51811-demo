@@ -21,5 +21,6 @@ module.exports = {
       "semi": 0,
       "vue/require-prop-types":"off",
       "linebreak-style":0,
+      "no-console":0
     }
 };

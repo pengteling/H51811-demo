@@ -33,6 +33,30 @@ const config = {
             }
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use:[
+          'vue-style-loader',
+          {
+            loader:'css-loader',
+            options:{
+              sourceMap:true,
+              modules:true,
+              localIdentName:'[path]-[name]-[hash:base64:5]'
+            }
+          },
+          {
+            loader:'postcss-loader',
+            options:{
+              sourceMap:true
+            }
+          },
+        ]
+      },
+      {
+        resourceQuery: /blockType=docs/,
+        loader: require.resolve('./docs-loader.js')
       }
     ]
   },
