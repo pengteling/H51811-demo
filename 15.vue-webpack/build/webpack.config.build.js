@@ -16,6 +16,15 @@ const config = {
       }
     ]
   },
+  optimization:{
+    splitChunks:{
+      chunks:'all',
+      name:'vendors'
+    },
+    runtimeChunk:{
+      name:'runtime'
+    }
+  },
   plugins:[
     new MiniCssExtractPlugin({
       filename: 'css/[name]-[hash:8].css'
