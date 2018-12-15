@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved:"off" */
 import './style/app.css'
 
 export default {
