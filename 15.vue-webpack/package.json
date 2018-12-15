@@ -11,7 +11,7 @@
     "lint": "eslint --ext .js,.vue,.jsx src/",
     "lint-fix": "eslint --fix --ext .js,.vue,.jsx src/",
     "clean": "rimraf dist",
-    "precommit": "npm run lint-fix"
+
   },
   "author": "",
   "license": "ISC",
@@ -56,5 +56,10 @@
     "popper.js": "^1.14.6",
     "swiper": "^4.4.5",
     "vue": "^2.5.19"
+  },
+  "husky":{
+    "hooks":{
+      "pre-commit": "npm run lint-fix"
+    }
   }
 }
