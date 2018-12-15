@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App5.jsx'
+import App from './App6.jsx'
 /* eslint no-new: "off" */
 new Vue({
   el: '#app',
