@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/ui.css">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="./js/ui.js"></script>
+
+</head>
+<body>
+  <div id="app">
+    <ui-switch
+      v-model="isShow"
+      active-color="#13ce66"
+      inactive-color="#ff4949"
+    ></ui-switch>
+  </div>
+  <script>
+    new Vue({
+      el:'#app',
+      data:{
+        isShow:true
+      },
+      components:{
+        uiSwitch:simpleUI5.UiSwitch
+      }
+    })
+  </script>
+</body>
+</html>

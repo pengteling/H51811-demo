@@ -1,0 +1,34 @@
+input[data-v-1fecdf18] {
+  display: none;
+}
+.box[data-v-1fecdf18] {
+  position: relative;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 40px;
+  height: 20px;
+  -webkit-border-radius: 20px;
+          border-radius: 20px;
+  border: 1px solid #dcdfe6;
+  background: #dcdfe6;
+  cursor: pointer;
+}
+.box .circle[data-v-1fecdf18] {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    -webkit-border-radius: 50%;
+            border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    background: #fff;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.box.open .circle[data-v-1fecdf18] {
+    -webkit-transform: translate3d(20px, 0px, 0px);
+            transform: translate3d(20px, 0px, 0px);
+}
+
