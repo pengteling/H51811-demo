@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App6.jsx'
+import App from './Swiper.vue'
 /* eslint no-new: "off" */
 new Vue({
   el: '#app',
