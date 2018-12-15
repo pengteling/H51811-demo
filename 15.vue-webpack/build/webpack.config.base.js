@@ -43,6 +43,11 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.jsx$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
         test: /\.(jpg|jpeg|gif|png|svg|ttf)$/,
         use:[
           {

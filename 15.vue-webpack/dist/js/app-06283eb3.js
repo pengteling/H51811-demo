@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{2:function(t,n,e){},6:function(t,n,e){"use strict";e.r(n);var p=e(1);e(2);new p.a({el:"#app",components:{App:{name:"App",data:function(){return{text:"test123"}},render:function(){return(0,arguments[0])("div",{attrs:{id:"foo"}},[this.text])}}},template:"<App />"})}},[[6,2,1]]]);
