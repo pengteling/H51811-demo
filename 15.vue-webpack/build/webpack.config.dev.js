@@ -6,7 +6,8 @@ const config = {
   devServer:{
     contentBase:"./dist",
     hot:true,
-    port:8888
+    port:8888,
+    historyApiFallback: true
   },
   module:{
     rules:[

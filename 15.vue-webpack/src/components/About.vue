@@ -1,5 +1,5 @@
 <template>
   <div>
-    uitree
+    关于我们
   </div>
 </template>

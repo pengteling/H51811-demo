@@ -23,6 +23,7 @@ module.exports = {
       "linebreak-style":0,
       "no-console":0,
       "import/no-unresolved":0,
-      "import/extensions":0
+      "import/extensions":0,
+
     }
 };

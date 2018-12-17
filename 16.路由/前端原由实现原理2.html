@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <a href="/">首页</a>
+  <a href="/page1">page1</a>
+  <div id="app"></div>
+  <script>
+    function Router(){
+      this.routes = {}
+    }
+    // window.location.hash
+    // window.addEventListener('hashchange',function(){
+
+    // })
+    
+    Router.prototype.route = function(path, callback){
+      this.routes[path] = callback
+    }
+
+    Router.prototype.init = function(){      
+      
+      const links = document.getElementsByTagName('a')
+      for(let link of links){
+        link.addEventListener('click', e=>{
+          e.preventDefault()
+          let uri = link.href
+          console.log(uri)
+          history.pushState({path:uri},null,uri)
+          document.getElementById('app').innerHTML = uri + '内容'
+        })
+      }
+    }
+
+
+    var router = new Router()
+    
+    router.route('/', function(){
+      // 设置页面内容
+      console.log("首页")
+      document.getElementById('app').innerHTML = '首页内容'
+    })
+    router.route('/page1', function(){
+      // 设置页面page1的内容
+      console.log("page1")
+      document.getElementById('app').innerHTML = 'page1内容'
+    })
+    router.init()
+
+  </script>
+</body>
+</html>
