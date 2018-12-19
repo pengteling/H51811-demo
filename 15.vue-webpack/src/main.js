@@ -2,7 +2,21 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 
+/* eslint no-unused-vars:'off' */
+router.beforeEach((to, from, next) => {
+  console.log('beforeEach')
+  // next('/contact')
+  next()
+})
 
+router.beforeResolve((to, from, next) => {
+  console.log('beforeResolve')
+  next()
+})
+
+router.afterEach((to, from) => {
+  console.log('afterEach')
+})
 /* eslint no-new: "off" */
 new Vue({
   el: '#app',

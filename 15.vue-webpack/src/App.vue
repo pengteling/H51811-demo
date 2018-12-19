@@ -66,7 +66,7 @@
               </a> -->
               <RouterLink
                 class="nav-link"
-                :to="{name:'User', params:{id:5}}"
+                :to="{name:'User', params:{userid:5}}"
               >
                 用户5
               </RouterLink>

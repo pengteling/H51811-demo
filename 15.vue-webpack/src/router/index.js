@@ -29,6 +29,11 @@ const routes = [
     name: 'About',
     path: '/about',
     component: About,
+    beforeEnter: (to, from, next) => {
+      // ...
+      console.log('beforeEnter')
+      next()
+    },
   },
   {
     path: '/contact',
@@ -52,14 +57,14 @@ const routes = [
   {
     name: 'User',
     path: '/user/:userid',
-    // props: true,
+    props: true,
     // props: { userid: 5, str: '用户名5' },
-    props: route => ({
-      userid: route.params.userid,
-      pid: route.params.pid,
-      str: '用户名',
-      sokey: route.query.sokey,
-    }),
+    // props: route => ({
+    //   userid: route.params.userid,
+    //   pid: route.params.pid,
+    //   str: '用户名',
+    //   sokey: route.query.sokey,
+    // }),
     component: User,
     children: [
       {

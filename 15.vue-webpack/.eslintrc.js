@@ -26,7 +26,8 @@ module.exports = {
       "import/extensions":0,
       "vue/component-name-in-template-casing":0,
       "vue/html-self-closing":0,
-      "max-len":0
+      "max-len":0,
+      "no-unused-vars":0
 
     }
 };
