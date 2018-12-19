@@ -7,9 +7,13 @@
 <script>
 export default {
   mounted() {
-    setTimeout(() => {
-      this.$router.push({ name: 'Map' })
-    }, 3000)
+    // setTimeout(() => {
+    //   this.$router.push({ name: 'Map' }, () => {
+    //     console.log('push done')
+    //   }, () => {
+    //     console.log('push faild')
+    //   })
+    // }, 3000)
   },
 }
 </script>

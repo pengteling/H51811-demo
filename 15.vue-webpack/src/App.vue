@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
         <a
           class="navbar-brand"
@@ -44,12 +44,18 @@
               </RouterLink>
             </li>
             <li class="nav-item">
-              <a
+              <!-- <a
                 class="nav-link"
                 href="#/about"
               >
                 关于我们
-              </a>
+              </a> -->
+              <router-link
+                class="nav-link"
+                :to="{name:'About'}"
+              >
+                关于我们
+              </router-link>
             </li>
             <li class="nav-item">
               <!-- <a
@@ -66,12 +72,18 @@
               </RouterLink>
             </li>
             <li class="nav-item">
-              <a
+              <!-- <a
                 class="nav-link"
                 href="#/contact"
               >
                 联系我们
-              </a>
+              </a> -->
+              <router-link
+                class="nav-link"
+                :to="{name:'Map'}"
+              >
+                联系我们
+              </router-link>
             </li>
           </ul>
         </div>
@@ -81,7 +93,9 @@
       <div style="height:100px" />
       <div class="row">
         <div class="col-12">
+          <router-view name="header"></router-view>
           <RouterView />
+          <router-view name="footer"></router-view>
         </div>
       </div>
     </div>
@@ -89,6 +103,7 @@
 </template>
 <script>
 import 'bootstrap/scss/bootstrap.scss'
+import 'bootstrap/dist/js/bootstrap'
 
 export default {
 

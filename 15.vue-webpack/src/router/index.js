@@ -12,7 +12,18 @@ const routes = [
   {
     name: 'Home',
     path: '/',
-    component: Home,
+    // component: Home,
+    components: {
+      default: Home,
+      header: {
+        name: 'Header',
+        template: '<header>头部</header>',
+      },
+      footer: {
+        name: 'Footer',
+        template: '<footer>底部</footer>',
+      },
+    },
   },
   {
     name: 'About',
@@ -40,8 +51,38 @@ const routes = [
   },
   {
     name: 'User',
-    path: '/user/:id',
+    path: '/user/:userid',
+    // props: true,
+    // props: { userid: 5, str: '用户名5' },
+    props: route => ({
+      userid: route.params.userid,
+      pid: route.params.pid,
+      str: '用户名',
+      sokey: route.query.sokey,
+    }),
     component: User,
+    children: [
+      {
+        path: 'photo/:pid',
+        component: {
+          template: '<div>照片 {{ $route.params.pid}} </div>',
+        },
+      },
+    ],
+  },
+  {
+    path: '/a',
+    // redirect: '/b',
+    alias: ['/c', '/d', '/e/f/g'],
+    component: {
+      template: '<div>aaaa</div>',
+    },
+  },
+  {
+    path: '/b',
+    component: {
+      template: '<div>bbbb</div>',
+    },
   },
 
 ]

@@ -6,7 +6,15 @@
       用户5
     </RouterLink>
     <p>
-      用户ID:{{ $route.params.id }}
+      用户ID:{{ userid }} -- {{ str }}
     </p>
+    <p>照片</p>
+    <router-view></router-view>
   </div>
 </template>
+
+<script>
+export default {
+  props: ['userid', 'str', 'pid', 'sokey'],
+}
+</script>

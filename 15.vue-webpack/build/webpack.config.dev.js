@@ -3,6 +3,7 @@ const merge = require('webpack-merge')
 const webpack = require('webpack')
 const config = {
   mode:'development',
+  devtool: 'source-map',
   devServer:{
     contentBase:"./dist",
     hot:true,

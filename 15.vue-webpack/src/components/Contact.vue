@@ -1,12 +1,18 @@
 <template>
   <div>
     联系我们
-    <a href="#/contact">
+    <!-- <a href="#/contact">
       电子地图
-    </a>
-    <a href="#/contact/tel">
+    </a> -->
+    <router-link :to="{name:'Map'}">
+      电子地图
+    </router-link>
+    <!-- <a href="#/contact/tel">
       联系电话
-    </a>
+    </a> -->
+    <router-link :to="{name:'Tel'}">
+      联系电话
+    </router-link>
     <RouterView />
   </div>
 </template>

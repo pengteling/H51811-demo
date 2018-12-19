@@ -24,6 +24,9 @@ module.exports = {
       "no-console":0,
       "import/no-unresolved":0,
       "import/extensions":0,
+      "vue/component-name-in-template-casing":0,
+      "vue/html-self-closing":0,
+      "max-len":0
 
     }
 };
