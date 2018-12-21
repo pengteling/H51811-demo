@@ -110,4 +110,18 @@ const routes = [
 export default new Router({
   mode: 'history',
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    /* console.log(savedPosition)
+    // return { x: 0, y: 0 }
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { x: 0, y: 0 } */
+    /* eslint consistent-return:'off' */
+    /* if (to.hash) {
+      return {
+        selector: to.hash,
+      }
+    } */
+  },
 })

@@ -26,9 +26,37 @@ export default {
     // })
     next()
   },
+  data() {
+    return {
+      text: '',
+    }
+  },
   beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter')
-    next()
+    fetch('/demo.html')
+      .then(res => res.text())
+      .then((res) => {
+        console.log(res)
+        /* eslint no-constant-condition:'off' */
+        if (true) {
+          console.log('服务器通讯错')
+          next(false)
+        } else {
+          next((vm) => {
+            /* eslint no-param-reassign:'off' */
+            vm.text = res
+          })
+        }
+      })
+    // next()
+  },
+  created() {
+    fetch('/demo.html')
+      .then(res => res.text())
+      .then((res) => {
+        console.log('服务器通讯错')
+        console.log(res)
+      })
   },
 }
 </script>
