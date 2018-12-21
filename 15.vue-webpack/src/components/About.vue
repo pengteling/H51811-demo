@@ -1,7 +1,9 @@
 <template>
-  <div>
-    关于我们
-  </div>
+  <transition name="slider">
+    <div>
+      关于我们
+    </div>
+  </transition>
 </template>
 <script>
 export default {
@@ -23,3 +25,18 @@ export default {
   },
 }
 </script>
+<style scoped>
+.slider-enter-active,.slider-leave-active{
+  transition: all .5s;
+}
+.slider-enter{
+  transform: translate3d(100%,0,0)
+}
+.slider-leave-to{
+  transform: translate3d(-100%,0,0)
+}
+.sec1 > div {
+  position: absolute;
+  width: 100%;
+}
+</style>

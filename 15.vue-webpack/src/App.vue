@@ -92,10 +92,14 @@
     <div class="container">
       <div style="height:100px" />
       <div class="row">
-        <div class="col-12">
-          <router-view name="header"></router-view>
-          <RouterView />
-          <router-view name="footer"></router-view>
+        <div class="col-12 sec1">
+          <!-- <router-view name="header"></router-view> -->
+
+          <!-- <transition name="slider">
+            <RouterView />
+          </transition> -->
+          <router-view></router-view>
+          <!-- <router-view name="footer"></router-view> -->
         </div>
       </div>
     </div>
@@ -109,3 +113,21 @@ export default {
 
 }
 </script>
+<style>
+body{
+  overflow-x: hidden;
+}
+/* .slider-enter-active,.slider-leave-active{
+  transition: all .5s;
+}
+.slider-enter{
+  transform: translate3d(-100%,0,0)
+}
+.slider-leave-to{
+  transform: translate3d(100%,0,0)
+}
+.sec1 > div {
+  position: absolute;
+  width: 100%;
+} */
+</style>

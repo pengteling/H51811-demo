@@ -6,6 +6,7 @@ import Contact from '@/Contact'
 import User from '@/User'
 import Map from '@/Map'
 import Tel from '@/Tel'
+import Login from '@/Login'
 
 Vue.use(Router)
 const routes = [
@@ -51,12 +52,18 @@ const routes = [
         // /contact/Tel
         path: 'tel',
         component: Tel,
+        meta: {
+          requireAuth: true,
+        },
       },
     ],
   },
   {
     name: 'User',
     path: '/user/:userid',
+    meta: {
+      requireAuth: true,
+    },
     props: true,
     // props: { userid: 5, str: '用户名5' },
     // props: route => ({
@@ -69,6 +76,9 @@ const routes = [
     children: [
       {
         path: 'photo/:pid',
+        // meta: {
+        //   requireAuth: true,
+        // },
         component: {
           template: '<div>照片 {{ $route.params.pid}} </div>',
         },
@@ -88,6 +98,11 @@ const routes = [
     component: {
       template: '<div>bbbb</div>',
     },
+  },
+  {
+    name: 'Login',
+    path: '/login',
+    component: Login,
   },
 
 ]
