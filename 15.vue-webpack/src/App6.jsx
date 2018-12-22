@@ -13,11 +13,13 @@
 //   },
 // }
 
-const PermissionComp = ({ slots }) => (
-    <div>
-      {slots().default[0]}
-    </div>
-)
+// const PermissionComp = ({ slots }) => (
+//     <div>
+//       {slots().default[0]}
+//     </div>
+// )
+
+import { PermissionComp } from './App7'
 
 export default {
   // components: {
