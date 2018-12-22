@@ -1,6 +1,7 @@
 <template>
   <div>
     关于我们
+    <asyncExample></asyncExample>
     Vue.js 是什么
     Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
 
@@ -37,7 +38,48 @@
   </div>
 </template>
 <script>
+
+// Vue.component('async-example', (resolve, reject) => {
+//   setTimeout(() => {
+//     // 向 `resolve` 回调传递组件定义
+//     resolve({
+//       template: '<div>I am async!</div>'
+//     })
+//   }, 1000)
+// })
+/* import Vue from 'vue'
+Vue.component(
+  'asyncExample',
+  // 这个 `import` 函数会返回一个 `Promise` 对象。
+  () => import('./my-async-component')
+) */
+import Vue from 'vue'
+
+/* eslint global-require:'off' */
+/* eslint import/no-dynamic-require:'off' */
+/* eslint import/no-amd:'off' */
+// Vue.component('asyncExample', (resolve) => {
+//   // 这个特殊的 `require` 语法将会告诉 webpack
+//   // 自动将你的构建代码切割成多个包，这些包
+//   // 会通过 Ajax 请求加载
+//   require(['./AsyncExample'], resolve)
+// })
 export default {
+  components: {
+    // asyncExample: (resolve, reject) => {
+    //   setTimeout(() => {
+    //     // 向 `resolve` 回调传递组件定义
+    //     resolve({
+    //       template: '<div>I am async!</div>',
+    //     })
+    //   }, 10000)
+    // },
+    /* import() 需要babel-plugin-syntax-dynamic-import插件支持 */
+    asyncExample: () => import('./AsyncExample'),
+    /* require写法 */
+    // asyncExample: resolve => require(['./AsyncExample'], resolve),
+
+  },
   beforeRouteEnter(to, from, next) {
     // ...
     console.log('beforeRouteEnter')

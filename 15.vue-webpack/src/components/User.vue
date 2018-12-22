@@ -40,7 +40,8 @@ export default {
         /* eslint no-constant-condition:'off' */
         if (true) {
           console.log('服务器通讯错')
-          next(false)
+          // next(false)
+          next()
         } else {
           next((vm) => {
             /* eslint no-param-reassign:'off' */

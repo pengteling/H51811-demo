@@ -2,11 +2,13 @@ import Router from 'vue-router'
 import Vue from 'vue'
 import Home from '@/Home'
 import About from '@/About'
-import Contact from '@/Contact'
-import User from '@/User'
+// import User from '@/User'
 import Map from '@/Map'
 import Tel from '@/Tel'
 import Login from '@/Login'
+// import Contact from '@/Contact'
+const Contact = () => import(/* webpackChunkName:"pages" */ '@/Contact')
+const User = () => import(/* webpackChunkName:"pages" */ '@/User')
 
 Vue.use(Router)
 const routes = [
@@ -118,10 +120,17 @@ export default new Router({
     }
     return { x: 0, y: 0 } */
     /* eslint consistent-return:'off' */
-    /* if (to.hash) {
-      return {
-        selector: to.hash,
-      }
-    } */
+    // if (to.hash) {
+    //   return {
+    //     selector: to.hash,
+    //   }
+    // }
   },
+  // scrollBehavior(to, from, savedPosition) {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve({ x: 0, y: 300 })
+  //     }, 1000)
+  //   })
+  // },
 })

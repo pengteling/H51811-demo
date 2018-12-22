@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{15:function(n,e,t){"use strict";t.r(e);var s=function(){var n=this.$createElement;return(this._self._c||n)("div",[this._v("async component")])};s._withStripped=!0;var c={},i=t(0),o=Object(i.a)(c,s,[],!1,null,null,null);o.options.__file="src/components/AsyncExample.vue";e.default=o.exports}}]);

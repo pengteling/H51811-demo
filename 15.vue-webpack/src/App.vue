@@ -50,9 +50,11 @@
                 >
                   关于我们
                 </a> -->
+              <!-- to="/about#miaodian" -->
+              <!-- :to="{name:'About'}" -->
               <router-link
                 class="nav-link"
-                to="/about#miaodian"
+                :to="{name:'About',hash:'#miaodian'}"
               >
                 关于我们
               </router-link>
@@ -134,7 +136,7 @@ export default {
   // },
 }
 </script>
-<style>
+<style lang="scss">
 body{
   overflow-x: hidden;
 }

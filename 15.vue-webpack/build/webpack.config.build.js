@@ -4,12 +4,12 @@ const merge = require('webpack-merge')
 const path = require('path')
 const config = {
   mode:'production',
-  entry: path.resolve(__dirname,'../src/ui.js'),
-  output:{
-    filename:'./js/ui.js',
-    library:'simpleUI5',
-    libraryTarget:'umd'
-  },
+  // entry: path.resolve(__dirname,'../src/ui.js'),
+  // output:{
+  //   filename:'./js/ui.js',
+  //   library:'simpleUI5',
+  //   libraryTarget:'umd'
+  // },
   module:{
     rules:[
       {
@@ -19,6 +19,14 @@ const config = {
           'css-loader',
           'postcss-loader',
           'sass-loader'
+        ]
+      },
+      {
+        test:/\.css$/,
+        use:[
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader'
         ]
       }
     ]
@@ -34,7 +42,7 @@ const config = {
   // },
   plugins:[
     new MiniCssExtractPlugin({
-      filename: 'css/ui.css'
+      filename: 'css/app.css'
     })
   ]
 }
