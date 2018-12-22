@@ -28,6 +28,7 @@
 </template>
 <script>
 export default {
+  name: 'Item',
   /* eslint vue/require-prop-types:"off" */
   props: ['todo'],
   data() {

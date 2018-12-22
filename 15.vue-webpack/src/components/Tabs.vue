@@ -11,12 +11,18 @@
         v-for="state in states"
         :key="state"
       >
-        <a
+        <!-- <a
           :class="{'selected': state === filter}"
           @click="toggleFilter(state)"
         >
           {{ state }}
-        </a>
+        </a> -->
+        <router-link
+          :to="{name:state}"
+          :class="{'selected': state === filter}"
+        >
+          {{ state }}
+        </router-link>
         <span />
       </li>
     </ul>

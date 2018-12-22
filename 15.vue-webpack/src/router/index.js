@@ -7,12 +7,31 @@ import Login from '@/Login'
 Vue.use(Router)
 const routes = [
   {
-    name: 'List',
+
     path: '/',
     components: {
       default: Items,
       tabs: Tabs,
     },
+    children: [
+      {
+        name: 'All',
+        path: '',
+        alias: 'all',
+      },
+      {
+        name: 'Active',
+        path: 'active',
+      },
+      {
+        name: 'Completed',
+        path: 'completed',
+      },
+      // {
+      //   name: 'List',
+      //   path: ':typename',
+      // },
+    ],
   },
   {
     name: 'Login',

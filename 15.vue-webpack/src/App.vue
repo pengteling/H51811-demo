@@ -108,10 +108,23 @@ export default {
       return this.todos.some(todo => todo.isCompleted)
     },
   },
+  watch: {
+    $route: {
+      handler(route) {
+        console.log('$route watch', route)
+        console.log(this.filter, route.name);
+        // this.$nextTick(() => this.filter = route.name)
+        setTimeout(() => this.filter = route.name, 100)
+        console.log(this.filter, route.name);
+      },
+      immediate: true,
+    },
+  },
   updated() {
     this.saveData()
   },
   created() {
+    // setTimeout(() => this.getData(), 3000)
     this.getData()
   },
   methods: {
