@@ -1,7 +1,7 @@
 <template>
   <ul class="nav">
     <li>
-      <router-link :to="{path:'/'}">
+      <router-link :to="{name:'Mobile'}">
         首页
       </router-link>
     </li>
@@ -34,7 +34,7 @@
     align-items: center;
     a{
       color:#ddd;
-      &.select{
+      &.router-link-active{
         color:#e00
       }
     }
