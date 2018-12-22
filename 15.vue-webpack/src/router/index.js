@@ -1,42 +1,66 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import Items from '@/Items.jsx'
-import Tabs from '@/Tabs'
-import Login from '@/Login'
+import Main from '@/Main'
+import Footer from '@/Footer'
+import Home from '@/Home'
+import Mobile from '@/Mobile'
+import TV from '@/TV'
+
+const Mpointsmall = () => import('@/Mpointsmall')
+const Category = () => import('@/Category')
+const Cart = () => import('@/Cart')
+const Me = () => import('@/Me')
+// const Main = () => import('@/Main')
+// const Footer = () => import('@/Footer')
 
 Vue.use(Router)
 const routes = [
   {
-
     path: '/',
     components: {
-      default: Items,
-      tabs: Tabs,
+      default: Main,
+      footer: Footer,
     },
     children: [
       {
-        name: 'All',
         path: '',
-        alias: 'all',
+        component: Home,
+        children: [
+          {
+            name: 'Mobile',
+            path: '',
+            alias: ['mobile', 'phone', 'sj'],
+            component: Mobile,
+          },
+          {
+            name: 'TV',
+            path: 'tv',
+            alias: ['home/tv'],
+            component: TV,
+          },
+        ],
       },
       {
-        name: 'Active',
-        path: 'active',
+        name: 'Category',
+        path: 'category',
+        component: Category,
       },
       {
-        name: 'Completed',
-        path: 'completed',
+        name: 'Cart',
+        path: 'cart',
+        component: Cart,
       },
-      // {
-      //   name: 'List',
-      //   path: ':typename',
-      // },
+      {
+        name: 'Me',
+        path: 'me',
+        component: Me,
+      },
     ],
   },
   {
-    name: 'Login',
-    path: '/login',
-    component: Login,
+    name: 'Mpointsmall',
+    path: '/mpointsmall',
+    component: Mpointsmall,
   },
 ]
 
