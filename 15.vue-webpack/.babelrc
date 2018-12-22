@@ -11,9 +11,9 @@
     ]
   ],
   "plugins": [
+    "syntax-dynamic-import",
     "transform-vue-jsx",
     "jsx-v-model",
     "jsx-vue-functional",
-    "syntax-dynamic-import"
   ]
 }

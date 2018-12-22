@@ -1,167 +1,152 @@
 <template>
-  <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div class="container">
-        <a
-          class="navbar-brand"
-          href="#"
+  <div id="demo">
+    <section class="todoapp">
+      <header class="header">
+        <h1>todos</h1>
+        <input
+          ref="ipt"
+          type="text"
+          class="new-todo"
+          placeholder="what needs to be done?"
+          @keyup.enter="addTodo"
         >
-          Navbar
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon" />
-        </button>
-        <div
-          id="navbarNav"
-          class="collapse navbar-collapse"
-        >
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <!-- <a
-                  class="nav-link"
-                  href="#"
-                >
-                  首页 <span class="sr-only">
-                    (current)
-                  </span>
-                </a> -->
+      </header>
 
-              <RouterLink
-                class="nav-link"
-                :to="{name:'Home'}"
-              >
-                首页<span class="sr-only">
-                  (current)
-                </span>
-              </RouterLink>
-            </li>
-            <li class="nav-item">
-              <!-- <a
-                  class="nav-link"
-                  href="#/about"
-                >
-                  关于我们
-                </a> -->
-              <!-- to="/about#miaodian" -->
-              <!-- :to="{name:'About'}" -->
-              <router-link
-                class="nav-link"
-                :to="{name:'About',hash:'#miaodian'}"
-              >
-                关于我们
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <!-- <a
-                  class="nav-link"
-                  href="#/user"
-                >
-                  用户中心
-                </a> -->
-              <RouterLink
-                class="nav-link"
-                :to="{name:'User', params:{userid:5}}"
-              >
-                用户5
-              </RouterLink>
-            </li>
-            <li class="nav-item">
-              <!-- <a
-                  class="nav-link"
-                  href="#/contact"
-                >
-                  联系我们
-                </a> -->
-              <router-link
-                class="nav-link"
-                :to="{name:'Map'}"
-              >
-                联系我们
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="container">
-      <div style="height:100px" />
-      <div class="row">
-        <div class="col-12 sec1">
-          <!-- <router-view name="header"></router-view> -->
+      <section class="main">
+        <input
+          id="toggle-all"
+          v-model="checkAll"
+          type="checkbox"
+          class="toggle-all"
+        >
+        <!-- label用来显示全选按钮 -->
+        <label for="toggle-all" />
+        <router-view
+          :todos-view="todosView"
+          @deleteTodo="deleteTodo"
+        ></router-view>
+        <!-- <Items
+          :todos-view="todosView"
+        /> -->
+        <!-- <ul class="todo-list">
+          <Item
+            v-for="(todo,index) in todosView"
+            :key="index"
+            :todo="todo"
+            @delete-todo="deleteTodo"
+          />
+        </ul> -->
+      </section>
 
-          <transition :name="effect">
-            <RouterView />
-          </transition>
-          <!-- <router-view></router-view> -->
-          <!-- <router-view name="footer"></router-view> -->
-        </div>
-      </div>
-    </div>
+      <!-- <Tabs
+        :filter="filter"
+        :items-left-count="itemsLeftCount"
+        :is-have-completed="isHaveCompleted"
+        @toggle-filter="toggleFilter"
+        @clear-completed="clearCompleted"
+      /> -->
+      <router-view
+        name="tabs"
+        :filter="filter"
+        :items-left-count="itemsLeftCount"
+        :is-have-completed="isHaveCompleted"
+        @toggle-filter="toggleFilter"
+        @clear-completed="clearCompleted"
+      ></router-view>
+    </section>
   </div>
 </template>
 <script>
-import 'bootstrap/scss/bootstrap.scss'
-import 'bootstrap/dist/js/bootstrap'
+import './style/app.scss'
+// import Item from './components/Item.vue'
+// import Tabs from './components/Tabs.vue'
 
 export default {
+  // components: {
+  //   Item,
+  //   // Tabs,
+  // },
   data() {
     return {
-      effect: 'slider',
+      todos: [
+        /* {
+            content:'写代码',
+            isCompleted:false
+          },
+          {
+            content:'吃饭',
+            isCompleted:true
+          }, */
+      ],
+      filter: 'All',
     }
   },
-  watch: {
-    $route(to, from) {
-      const toDepth = to.path.split('/').length
-      const fromDepth = from.path.split('/').length
-      this.effect = toDepth < fromDepth ? 'slider' : 'slider2'
+  computed: {
+    /* 双向绑定 计算属性 实现全选反选功能 */
+    checkAll: {
+      get() {
+        return this.todos.every(todo => todo.isCompleted)
+      },
+      /* eslint no-return-assign:"off" */
+      /* eslint no-param-reassign:"off" */
+      set(val) {
+        this.todos.forEach(todo => todo.isCompleted = val)
+      },
+    },
+    itemsLeftCount() {
+      return this.todos.reduce((t, todo) => (todo.isCompleted ? t : t + 1), 0)
+    },
+    todosView() {
+      if (this.filter === 'All') {
+        return this.todos
+      } if (this.filter === 'Active') {
+        return this.todos.filter(todo => !todo.isCompleted)
+      }
+      return this.todos.filter(todo => todo.isCompleted)
+    },
+    isHaveCompleted() {
+      return this.todos.some(todo => todo.isCompleted)
     },
   },
-  // beforeRouteEnter(to, from, next) {
-  //   // ...
-  //   // 导航完成前 请求数据
-  //   console.log('beforeRouteEnter-beforeRouteEnter')
-  //   next()
-  // },
-  // beforeRouteUpdate(to, from, next) {
-  //   console.log('beforeRouteUpdate-beforeRouteUpdate')
-  //   next()
-  // },
+  updated() {
+    this.saveData()
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    addTodo() {
+      if (this.$refs.ipt.value) {
+        this.todos.unshift({
+        // content:e.target.value
+          content: this.$refs.ipt.value,
+          isCompleted: false,
+        })
+        this.$refs.ipt.value = ''
+      }
+    },
+    deleteTodo(todo) {
+      this.todos.splice(this.todos.findIndex(item => item === todo), 1)
+      // this.todos = this.todos.filter(item=>item !== todo)
+    },
+    toggleFilter(state) {
+      this.filter = state
+    },
+    clearCompleted() {
+      this.todos = this.todos.filter(todo => !todo.isCompleted)
+    },
+    saveData() {
+      localStorage.setItem('filter', this.filter)
+      localStorage.setItem('todos', JSON.stringify(this.todos))
+    },
+    getData() {
+      if (localStorage.getItem('todos')) {
+        this.todos = JSON.parse(localStorage.getItem('todos'))
+      }
+      if (localStorage.getItem('filter')) {
+        this.filter = localStorage.getItem('filter')
+      }
+    },
+  },
 }
 </script>
-<style lang="scss">
-body{
-  overflow-x: hidden;
-}
-.slider-enter-active,.slider-leave-active{
-  transition: all .5s;
-}
-.slider-enter{
-  transform: translate3d(-100%,0,0)
-}
-.slider-leave-to{
-  transform: translate3d(100%,0,0)
-}
-.sec1 > div {
-  position: absolute;
-  width: 100%;
-}
-
-
-.slider2-enter-active,.slider2-leave-active{
-  transition: all .5s;
-}
-.slider2-enter{
-  transform: translate3d(100%,0,0)
-}
-.slider2-leave-to{
-  transform: translate3d(-100%,0,0)
-}
-</style>
