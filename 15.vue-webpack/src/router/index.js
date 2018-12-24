@@ -23,13 +23,12 @@ const routes = [
       footer: Footer,
     },
     children: [
+      // {
+      //   path: '',
+      //   redirect: 'home',
+      // },
       {
         path: '',
-        redirect: 'home',
-      },
-      {
-        path: 'home',
-        // alias: '',
         component: Home,
         meta: {
           // depth: 2,
@@ -43,6 +42,7 @@ const routes = [
             component: Mobile,
             meta: {
               // depth: 3,
+              cate: 1,
               index: 1,
             },
           },
@@ -52,6 +52,7 @@ const routes = [
             alias: ['home/tv'],
             component: TV,
             meta: {
+              cate: 1,
               index: 2,
             },
           },
