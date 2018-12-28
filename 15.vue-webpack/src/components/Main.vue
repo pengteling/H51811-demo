@@ -19,6 +19,7 @@ export default {
   components: {
     Mplayer,
   },
+  /* eslint global-require:'off' */
   data() {
     return {
       musicList: [{
@@ -67,10 +68,11 @@ export default {
       currentIndex: 0,
       repeatType: 'cycle',
       player: {
-        paused: false,
+        paused: true,
         volume: 0.8,
         duration: 0,
         currentTime: 0,
+        changeTime: 0,
       },
 
     }
