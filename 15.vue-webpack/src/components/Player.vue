@@ -50,13 +50,24 @@
           />
         </div><div class="mt35 row">
           <div>
-            <i class="icon prev"></i><i
+            <!-- jsx  onClick = {prevNext.bind(this,'prev')} -->
+            <i
+              class="icon prev"
+              @click="prevNext('prev')"
+            ></i><i
               class="icon ml20"
               :class="player.paused?'play':'pause'"
               @click="playPause"
-            ></i><i class="icon next ml20"></i>
+            ></i><i
+              class="icon next ml20"
+              @click="prevNext('next')"
+            ></i>
           </div><div class="-col-auto">
-            <i class="icon repeat-cycle"></i>
+            <i
+              class="icon"
+              :class="`repeat-${repeatType}`"
+              @click="changeRepeatType"
+            ></i>
           </div>
         </div>
       </div><div class="-col-auto cover">
@@ -79,7 +90,7 @@ import ProgressBar from '@/ProgressBar'
 export default {
   name: 'Player',
   components: { ProgressBar },
-  props: ['musicItem', 'player'],
+  props: ['musicItem', 'player', 'repeatType'],
   data() {
     return {
       // paused: true,
@@ -104,6 +115,12 @@ export default {
     },
     changeVolume(volume) {
       this.player.volume = volume
+    },
+    changeRepeatType() {
+      this.$emit('changeRepeatType')
+    },
+    prevNext(type) {
+      this.$emit('prevNext', type)
     },
   },
 }
