@@ -4,9 +4,12 @@
     :src="url"
     @loadedmetadata="getDuration"
     @timeupdate="getCurrentTime"
+    @ended="toggleNext"
   ></audio>
 </template>
 <script>
+import EventBus from '../EventBus'
+
 export default {
   props: ['url', 'player'],
   computed: {
@@ -62,6 +65,11 @@ export default {
     },
     getCurrentTime() {
       this.player.currentTime = this.audio.currentTime
+      // EventBus.$emit('timeupdate', this.audio.currentTime)
+    },
+    toggleNext() {
+      console.log('toggleNext')
+      this.$emit('toggleNext')
     },
   },
 

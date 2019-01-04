@@ -206,31 +206,3 @@ a{
     background-position: 0 -112px;
 }
 
-.lrc-component{
-  text-align: center;
-  line-height: 2;
-  padding:50px;
-  ul{
-    height: 400px;
-    overflow-y: auto;
-    &::after{
-      content:'';
-      display:block;
-      padding-top: 200px;
-    }
-    li{
-      line-height: 32px;
-      min-height: 32px;
-      transition: opacity 0.5s;
-      font-size:16px;
-      opacity: 0.5;
-      &.cur{
-        // color:#2f9842;
-        color:#cc0000;
-        font-size:18px;
-        font-weight: 600;
-        opacity: 1;
-      }
-    }
-  }
-}

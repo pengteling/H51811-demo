@@ -3,6 +3,7 @@
     <Mplayer
       :url="currentMusicItem.file"
       :player="player"
+      @toggleNext="toggleNext"
     ></Mplayer>
     <!-- <audio src=""></audio> -->
     <router-view
@@ -145,6 +146,13 @@ export default {
         // console.log(newCurrentIndex)
       }
       this.currentIndex = newCurrentIndex
+    },
+    toggleNext() {
+      if (this.repeatType !== 'once') {
+        this.prevNext('next')
+      } else {
+        this.player.changeTime = 0
+      }
     },
   },
 }

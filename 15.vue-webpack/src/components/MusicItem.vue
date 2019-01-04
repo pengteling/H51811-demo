@@ -5,12 +5,9 @@
     @click="changeMusicItem"
   >
     <p>{{ musicItem.title }} - {{ musicItem.artist }}</p><p class="lrclink -col1">
-      <a
-        href="#/lrc"
-        class=""
-      >
+      <router-link :to="{name:'Lrc'}">
         歌词
-      </a>
+      </router-link>
     </p><p
       class="-col-auto delete"
       @click.stop="deleteMusicItem"

@@ -20,6 +20,7 @@ export default {
   components: {
     MusicItem,
   },
+  inheritAttrs: false,
   props: ['musicList', 'musicItem'],
   methods: {
     changeMusic(musicItem) {

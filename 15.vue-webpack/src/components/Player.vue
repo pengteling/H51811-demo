@@ -90,6 +90,7 @@ import ProgressBar from '@/ProgressBar'
 export default {
   name: 'Player',
   components: { ProgressBar },
+  inheritAttrs: false,
   props: ['musicItem', 'player', 'repeatType'],
   data() {
     return {
