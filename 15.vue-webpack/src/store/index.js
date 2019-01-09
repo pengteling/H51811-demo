@@ -1,10 +1,14 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
+// import { ADD_COUNT, ADD_COUNT_STEP, ADD_COUNT_STEP2 } from './mutation-types'
+import axios from 'axios'
+import { evil } from '../utils'
+import * as types from './mutation-types'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // strict: process.env.NODE_ENV !== 'production',
+  strict: process.env.NODE_ENV !== 'production',
   state: {
     count: 1,
     arr: [1, 2, 3],
@@ -19,6 +23,7 @@ export default new Vuex.Store({
       { id: 3, name: 'ww' },
 
     ],
+    musicList: [],
   },
   getters: {
     user2(state) {
@@ -33,5 +38,63 @@ export default new Vuex.Store({
     //     state.users.filter(user => user.id === id)
     //   }
     // },
+  },
+  /* eslint no-param-reassign:'off' */
+  mutations: {
+    [types.ADD_COUNT](state) {
+      state.count++
+    },
+    [types.ADD_COUNT_STEP](state, payload) {
+      state.count += payload
+    },
+    [types.ADD_COUNT_STEP2](state, payload) {
+      state.count = state.count + payload.step + payload.n
+    },
+    [types.CHANGE_MUSIC_LIST](state, payload) {
+      // console.log('CHANGE_MUSIC_LIST mutation')
+      state.musicList = payload
+    },
+  },
+  actions: {
+    addCountAction(context) {
+      console.log(context.state)
+      console.log(context.getters)
+      context.commit(types.ADD_COUNT)
+    },
+    addCountStepAction({
+      commit, dispatch, state, getters,
+    }, payload) {
+      commit(types.ADD_COUNT_STEP, payload.step)
+    },
+    loadData({ state, commit }) {
+      axios.get('http://music.henshui.com/api/musicList.js?!234')
+        .then((res) => {
+          // state.musicList = evil(res.data)
+          commit(types.CHANGE_MUSIC_LIST, evil(res.data))
+        })
+    },
+    loadStockID({ commit }) {
+      return axios.get('http://music.henshui.com/api/musicList.js?!234')
+    },
+    loadStockPrice({ dispatch }) {
+      dispatch('loadStockID').then(
+        (res) => {
+          const stockID = '600900'
+          axios.get(`http://music.henshui.com/api/musicList.js?stockid=${stockID}`)
+            .then(() => {
+              const price = 12.5
+              console.log(price)
+            })
+        },
+      )
+    },
+    async loadStockPrice2({ dispatch }) {
+      const stockID = await dispatch('loadStockID')
+      axios.get(`http://music.henshui.com/api/musicList.js?stockid=${stockID}`)
+        .then(() => {
+          const price = 12.5
+          console.log(price)
+        })
+    },
   },
 })

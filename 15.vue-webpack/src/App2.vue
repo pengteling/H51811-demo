@@ -7,12 +7,45 @@
     <!-- Count: {{ count }}
     arr: {{ arr }} -->
     {{ vmsg }}
+    <button @click="handlerClick">
+      ++
+    </button>
+    <button @click="ADD_COUNT">
+      ++
+    </button>
+
+    <button @click="addCountComp">
+      ++
+    </button>
+    <button @click="ADD_COUNT_STEP(3)">
+      +3
+    </button>
+    <button @click="ADD_COUNT_STEP2({step:3,n:1})">
+      +4
+    </button>
+    <button @click="addCountStep2Comp({step:3,n:1})">
+      +4
+    </button>
+    <p>
+      <button @click="addCountAction">
+        action ++
+      </button>
+      <button @click="addCountActionComp">
+        action ++
+      </button>
+      <button @click="addCountStepAction({step:5})">
+        action +5
+      </button>
+    </p>
     <Child></Child>
   </div>
 </template>
 <script>
 import Child from '@/Child'
-import { mapState, mapGetters } from 'vuex'
+
+import {
+  mapState, mapGetters, mapMutations, mapActions,
+} from 'vuex'
 
 export default {
   name: 'App2',
@@ -23,6 +56,7 @@ export default {
     return {
       msg: 'app2',
       num: 111,
+
     }
   },
   mounted() {
@@ -74,6 +108,40 @@ export default {
     user1() {
       return this.userWho(1)
     },
+  },
+  methods: {
+    handlerClick() {
+      this.$store.commit('ADD_COUNT')
+    },
+    ...mapMutations(['ADD_COUNT', 'ADD_COUNT_STEP', 'ADD_COUNT_STEP2']),
+    ...mapMutations({
+      addCountComp: 'ADD_COUNT',
+    }),
+
+    addCountStep2Comp(payload) {
+      // this.$store.commit('addCountStep2', payload)
+      this.$store.commit({
+        type: 'ADD_COUNT_STEP2',
+        ...payload,
+        // step: payload.step,
+        // n: payload.n,
+      })
+    },
+    // addCount(){
+    //   this.$store.commit('addCount')
+    // }
+    /* addCountAction() {
+      this.$store.dispatch('addCountAction')
+    }, */
+    ...mapActions(['addCountAction', 'addCountStepAction', 'loadData', 'loadStockPrice', 'loadStockPrice2']),
+    ...mapActions({
+      addCountActionComp: 'addCountAction',
+    }),
+  },
+  created() {
+    this.loadData()
+    this.loadStockPrice()
+    this.loadStockPrice2()
   },
 }
 </script>

@@ -1,4 +1,5 @@
 /* eslint import/prefer-default-export:'off' */
+/* 代替eval */
 export const evil = (fn) => {
   const Fn = Function
   return new Fn(`return ${fn}`)()
