@@ -88,8 +88,16 @@ export default new Vuex.Store({
         },
       )
     },
+    loadStockID2() {
+      return new Promise((resolve, reject) => {
+        axios.get('http://music.henshui.com/api/musicList.js?!234').then((res) => {
+          resolve('600900')
+        })
+      })
+      // axios.get('http://music.henshui.com/api/musicList.js?!234').then(res => {})
+    },
     async loadStockPrice2({ dispatch }) {
-      const stockID = await dispatch('loadStockID')
+      const stockID = await dispatch('loadStockID2')
       axios.get(`http://music.henshui.com/api/musicList.js?stockid=${stockID}`)
         .then(() => {
           const price = 12.5
