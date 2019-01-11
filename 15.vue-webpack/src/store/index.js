@@ -1,8 +1,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 // import { ADD_COUNT, ADD_COUNT_STEP, ADD_COUNT_STEP2 } from './mutation-types'
-import axios from 'axios'
-import { evil } from '../utils'
+
 import * as types from './mutation-types'
 
 Vue.use(Vuex)
@@ -10,101 +9,47 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
-    count: 1,
-    arr: [1, 2, 3],
-    obj: {
-      id: 1,
-      name: 'zs',
-      sex: 'male',
-    },
-    users: [
-      { id: 1, name: 'zs' },
-      { id: 2, name: 'ls' },
-      { id: 3, name: 'ww' },
-
-    ],
-    musicList: [],
+    todos: [],
+    filter: 'All',
   },
   getters: {
-    user2(state) {
-      return state.users[1]
+    todosView(state) {
+      if (state.filter === 'All') {
+        return state.todos
+      } if (state.filter === 'Active') {
+        return state.todos.filter(todo => !todo.isCompleted)
+      }
+      return state.todos.filter(todo => todo.isCompleted)
     },
-    userWho: state => id => state.users.filter(user => user.id === id),
-    user2Male(state, getters) {
-      return { ...getters.user2, sex: 'male' }
+    itemsLeftCount(state) {
+      return state.todos.reduce((t, todo) => (todo.isCompleted ? t : t + 1), 0)
     },
-    // userWho(state) {
-    //   return (id) => {
-    //     state.users.filter(user => user.id === id)
-    //   }
-    // },
+    isHaveCompleted(state) {
+      return state.todos.some(todo => todo.isCompleted)
+    },
   },
-  /* eslint no-param-reassign:'off' */
   mutations: {
-    [types.ADD_COUNT](state) {
-      state.count++
+    [types.ADD_TODO](state, payload) {
+      state.todos.unshift(payload)
     },
-    [types.ADD_COUNT_STEP](state, payload) {
-      state.count += payload
+    [types.DELETE_TODO](state, todo) {
+      state.todos.splice(state.todos.findIndex(item => item === todo), 1)
     },
-    [types.ADD_COUNT_STEP2](state, payload) {
-      state.count = state.count + payload.step + payload.n
-    },
-    [types.CHANGE_MUSIC_LIST](state, payload) {
-      // console.log('CHANGE_MUSIC_LIST mutation')
-      state.musicList = payload
-    },
-  },
-  actions: {
-    addCountAction(context) {
-      console.log(context.state)
-      console.log(context.getters)
-      context.commit(types.ADD_COUNT)
-    },
-    addCountStepAction({
-      commit, dispatch, state, getters,
-    }, payload) {
-      commit(types.ADD_COUNT_STEP, payload.step)
-    },
-    loadData({ state, commit }) {
-      axios.get('http://music.henshui.com/api/musicList.js?!234')
-        .then((res) => {
-          // state.musicList = evil(res.data)
-          commit(types.CHANGE_MUSIC_LIST, evil(res.data))
-        })
-    },
-    loadStockID({ commit }) {
-      return axios.get('http://music.henshui.com/api/musicList.js?!234')
-    },
-    loadStockPrice({ dispatch }) {
-      dispatch('loadStockID').then(
-        (res) => {
-          const stockID = '600900'
-          axios.get(`http://music.henshui.com/api/musicList.js?stockid=${stockID}`)
-            .then(() => {
-              const price = 12.5
-              console.log(price)
-            })
-        },
-      )
-    },
-    loadStockID2() {
-      return new Promise((resolve, reject) => {
-        axios.get('http://music.henshui.com/api/musicList.js?!234').then((res) => {
-          resolve('600900')
-        })
+    [types.EDIT_TODO](state, payload) {
+      /* eslint no-param-reassign:'off' */
+      state.todos = state.todos.map((item) => {
+        if (item === payload.oldTodo) {
+          return Object.assign({}, item, payload.newTodo)
+        }
+        return item
       })
-      // axios.get('http://music.henshui.com/api/musicList.js?!234').then(res => {
-      //   this.stockID='600900'
-      // })
     },
-    async loadStockPrice2({ dispatch }) {
-      const stockID = await dispatch('loadStockID2')
-      axios.get(`http://music.henshui.com/api/musicList.js?stockid=${stockID}`)
-        .then(() => {
-          const price = 12.5
-          console.log(price)
-        })
+    [types.TOGGLE_FILTER](state, filter) {
+      state.filter = filter
+    },
+    [types.CLEAR_COMPLETED](state) {
+      state.todos = state.todos.filter(todo => !todo.isCompleted)
     },
   },
+
 })

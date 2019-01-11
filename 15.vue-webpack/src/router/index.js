@@ -1,37 +1,42 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import Main from '@/Main'
-import Header from '@/Header'
-import Player from '@/Player'
-
-const List = () => import('@/List')
-const Lrc = () => import('@/Lrc')
+import Items from '@/Items.jsx'
+import Tabs from '@/Tabs'
+import Login from '@/Login'
 
 Vue.use(Router)
 const routes = [
   {
+
     path: '/',
     components: {
-      default: Main,
-      header: Header,
+      default: Items,
+      tabs: Tabs,
     },
     children: [
       {
+        name: 'All',
         path: '',
-        name: 'Player',
-        component: Player,
+        alias: 'all',
       },
       {
-        path: 'list',
-        name: 'List',
-        component: List,
+        name: 'Active',
+        path: 'active',
       },
       {
-        path: 'lrc',
-        name: 'Lrc',
-        component: Lrc,
+        name: 'Completed',
+        path: 'completed',
       },
+      // {
+      //   name: 'List',
+      //   path: ':typename',
+      // },
     ],
+  },
+  {
+    name: 'Login',
+    path: '/login',
+    component: Login,
   },
 ]
 

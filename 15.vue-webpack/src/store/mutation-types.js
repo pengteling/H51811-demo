@@ -1,5 +1,6 @@
 /* eslint import/prefer-default-export:'off' */
-export const ADD_COUNT = 'ADD_COUNT'
-export const ADD_COUNT_STEP = 'ADD_COUNT_STEP'
-export const ADD_COUNT_STEP2 = 'ADD_COUNT_STEP2'
-export const CHANGE_MUSIC_LIST = 'CHANGE_MUSIC_LIST'
+export const ADD_TODO = 'ADD_TODO'
+export const DELETE_TODO = 'DELETE_TODO'
+export const EDIT_TODO = 'EDIT_TODO'
+export const TOGGLE_FILTER = 'TOGGLE_FILTER'
+export const CLEAR_COMPLETED = 'CLEAR_COMPLETED'
