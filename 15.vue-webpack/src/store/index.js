@@ -94,7 +94,9 @@ export default new Vuex.Store({
           resolve('600900')
         })
       })
-      // axios.get('http://music.henshui.com/api/musicList.js?!234').then(res => {})
+      // axios.get('http://music.henshui.com/api/musicList.js?!234').then(res => {
+      //   this.stockID='600900'
+      // })
     },
     async loadStockPrice2({ dispatch }) {
       const stockID = await dispatch('loadStockID2')
