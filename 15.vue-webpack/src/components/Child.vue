@@ -53,6 +53,7 @@ export default {
     // setTimeout(() => this.aAddCountComp2(), 500)
     setTimeout(() => this.actionModuleA1(), 500)
     setTimeout(() => this.actionModuleA2(), 500)
+    setTimeout(() => this.someAction(), 500)
   },
   methods: {
     ...mapMutations('moduleA', {
@@ -65,6 +66,7 @@ export default {
       actionModuleA1: 'actionModuleA1',
       actionModuleA2: 'actionModuleA2',
     }),
+    ...mapActions(['someAction']),
   },
 }
 </script>

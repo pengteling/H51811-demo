@@ -19,5 +19,12 @@ export default {
     actionB({ commit }) {
       commit('bAddCount')
     },
+    someAction: {
+      root: true,
+      handler(namespacedContext, payload) {
+        console.log(namespacedContext)
+        console.log(payload)
+      }, // -> 'someAction'
+    },
   },
 }
