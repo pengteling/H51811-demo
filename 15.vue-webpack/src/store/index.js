@@ -27,6 +27,9 @@ export default new Vuex.Store({
     isHaveCompleted(state) {
       return state.todos.some(todo => todo.isCompleted)
     },
+    checkAll(state) {
+      return state.todos.length > 0 ? state.todos.every(todo => todo.isCompleted) : false
+    },
   },
   mutations: {
     [types.ADD_TODO](state, payload) {
@@ -49,6 +52,23 @@ export default new Vuex.Store({
     },
     [types.CLEAR_COMPLETED](state) {
       state.todos = state.todos.filter(todo => !todo.isCompleted)
+    },
+    [types.TOGGLE_ALL](state, val) {
+      state.todos.forEach((todo) => { todo.isCompleted = val })
+    },
+    [types.SET_DATA](state) {
+      if (localStorage.getItem('todos')) {
+        state.todos = JSON.parse(localStorage.getItem('todos'))
+      }
+      if (localStorage.getItem('filter')) {
+        state.filter = localStorage.getItem('filter')
+      }
+    },
+  },
+  actions: {
+    saveData({ state }) {
+      localStorage.setItem('filter', state.filter)
+      localStorage.setItem('todos', JSON.stringify(state.todos))
     },
   },
 

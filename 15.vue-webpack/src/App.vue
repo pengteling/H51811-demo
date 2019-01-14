@@ -15,7 +15,7 @@
       <section class="main">
         <input
           id="toggle-all"
-
+          v-model="checkAll"
           type="checkbox"
           class="toggle-all"
         >
@@ -63,16 +63,17 @@ export default {
   // },
   computed: {
     /* 双向绑定 计算属性 实现全选反选功能 */
-    // checkAll: {
-    //   get() {
-    //     return this.todos.every(todo => todo.isCompleted)
-    //   },
-    //   /* eslint no-return-assign:"off" */
-    //   /* eslint no-param-reassign:"off" */
-    //   set(val) {
-    //     this.todos.forEach(todo => todo.isCompleted = val)
-    //   },
-    // },
+    checkAll: {
+      get() {
+        return this.$store.getters.checkAll
+      },
+      /* eslint no-return-assign:"off" */
+      /* eslint no-param-reassign:"off" */
+      set(val) {
+        // this.todos.forEach(todo => todo.isCompleted = val)
+        this.$store.commit('TOGGLE_ALL', val)
+      },
+    },
     /* itemsLeftCount() {
       return this.todos.reduce((t, todo) => (todo.isCompleted ? t : t + 1), 0)
     }, */
@@ -104,13 +105,13 @@ export default {
     //   immediate: true,
     // },
   },
-  /* updated() {
+  updated() {
     this.saveData()
   },
   created() {
     // setTimeout(() => this.getData(), 3000)
     this.getData()
-  }, */
+  },
   methods: {
     ...mapMutations({
       addTodoStore: 'ADD_TODO',
@@ -138,18 +139,15 @@ export default {
     clearCompleted() {
       this.todos = this.todos.filter(todo => !todo.isCompleted)
     },
+    */
     saveData() {
-      localStorage.setItem('filter', this.filter)
-      localStorage.setItem('todos', JSON.stringify(this.todos))
+      // localStorage.setItem('filter', this.filter)
+      // localStorage.setItem('todos', JSON.stringify(this.todos))
+      this.$store.dispatch('saveData')
     },
     getData() {
-      if (localStorage.getItem('todos')) {
-        this.todos = JSON.parse(localStorage.getItem('todos'))
-      }
-      if (localStorage.getItem('filter')) {
-        this.filter = localStorage.getItem('filter')
-      }
-    }, */
+      this.$store.commit('SET_DATA')
+    },
   },
 }
 </script>
