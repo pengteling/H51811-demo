@@ -2,41 +2,7 @@
   <div>
     <h2>App2</h2>
     Count:{{ $store.state.count }} <br>
-    arr:{{ $store.state.arr }}
-
-    <!-- Count: {{ count }}
-    arr: {{ arr }} -->
-    {{ vmsg }}
-    <button @click="handlerClick">
-      ++
-    </button>
-    <button @click="ADD_COUNT">
-      ++
-    </button>
-
-    <button @click="addCountComp">
-      ++
-    </button>
-    <button @click="ADD_COUNT_STEP(3)">
-      +3
-    </button>
-    <button @click="ADD_COUNT_STEP2({step:3,n:1})">
-      +4
-    </button>
-    <button @click="addCountStep2Comp({step:3,n:1})">
-      +4
-    </button>
-    <p>
-      <button @click="addCountAction">
-        action ++
-      </button>
-      <button @click="addCountActionComp">
-        action ++
-      </button>
-      <button @click="addCountStepAction({step:5})">
-        action +5
-      </button>
-    </p>
+    moduleA Count:{{ $store.state.moduleA.count }} <br>
     <Child></Child>
   </div>
 </template>

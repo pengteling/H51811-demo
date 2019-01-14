@@ -4,6 +4,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import { evil } from '../utils'
 import * as types from './mutation-types'
+import moduleA from './modules/moduleA'
 
 Vue.use(Vuex)
 
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     musicList: [],
   },
   getters: {
+    countRoot(state) {
+      return state.count * 22
+    },
     user2(state) {
       return state.users[1]
     },
@@ -106,5 +110,8 @@ export default new Vuex.Store({
           console.log(price)
         })
     },
+  },
+  modules: {
+    moduleA: moduleA,
   },
 })
