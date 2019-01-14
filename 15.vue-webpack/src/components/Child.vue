@@ -7,12 +7,12 @@
 </template>
 <script>
 import {
-  mapState, mapGetters, mapMutations, mapActions,
+  mapState, mapGetters, mapMutations, mapActions, createNamespacedHelpers,
 } from 'vuex'
 
 // import { createNamespacedHelpers } from 'vuex'
 
-// const { mapState ,  mapActions } = createNamespacedHelpers('moduleA/moduleB')
+const { mapState: mapState2, mapActions: mapActions2 } = createNamespacedHelpers('moduleA/moduleB')
 
 export default {
   computed: {
@@ -31,6 +31,9 @@ export default {
     ...mapState('moduleA/moduleB', {
       msgFromB: 'msg',
       countFromB: state => state.count,
+    }),
+    ...mapState2({
+      msgFromB2: 'msg',
     }),
 
     // ...mapGetters({

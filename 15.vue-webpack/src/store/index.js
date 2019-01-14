@@ -112,6 +112,6 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    moduleA: moduleA,
+    moduleA,
   },
 })
