@@ -3,6 +3,12 @@
     Child
     <p>moduleA模块里面的count: {{ $store.state.moduleA.count }}</p>
     <p>aCount:{{ $store.getters.aCount }}</p>
+    <button @click="addModule">
+      注册模块
+    </button>
+    <button @click="removeModule">
+      卸载模块
+    </button>
   </div>
 </template>
 <script>
@@ -51,9 +57,9 @@ export default {
     // // this.$store.commit('moduleA/aAddCount')
     // setTimeout(() => this.aAddCountComp(), 500)
     // setTimeout(() => this.aAddCountComp2(), 500)
-    setTimeout(() => this.actionModuleA1(), 500)
-    setTimeout(() => this.actionModuleA2(), 500)
-    setTimeout(() => this.someAction(), 500)
+    // setTimeout(() => this.actionModuleA1(), 500)
+    // setTimeout(() => this.actionModuleA2(), 500)
+    // setTimeout(() => this.someAction(), 500)
   },
   methods: {
     ...mapMutations('moduleA', {
@@ -67,6 +73,25 @@ export default {
       actionModuleA2: 'actionModuleA2',
     }),
     ...mapActions(['someAction']),
+    addModule() {
+      console.log('addModule');
+      this.$store.registerModule(['moduleA', 'moduleD'], {
+        namespaced: true,
+        state: {
+          syncCount: 121,
+        },
+        getters: {
+          syncCount2(state) {
+            return state.syncCount * 2
+          },
+        },
+      })
+      console.log(this.$store)
+    },
+    removeModule() {
+      this.$store.unregisterModule(['moduleA', 'moduleD'])
+      console.log(this.$store)
+    },
   },
 }
 </script>

@@ -30,7 +30,8 @@ module.exports = {
       "no-unused-vars":0,
       "radix":0,
       "no-plusplus":0,
-      "object-shorthand":0
+      "object-shorthand":0,
+      "no-param-reassign":0
 
     }
 };

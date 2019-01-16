@@ -5,10 +5,11 @@ import axios from 'axios'
 import { evil } from '../utils'
 import * as types from './mutation-types'
 import moduleA from './modules/moduleA'
+import mutations from './mutations'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
     count: 1,
@@ -44,21 +45,22 @@ export default new Vuex.Store({
     // },
   },
   /* eslint no-param-reassign:'off' */
-  mutations: {
-    [types.ADD_COUNT](state) {
-      state.count++
-    },
-    [types.ADD_COUNT_STEP](state, payload) {
-      state.count += payload
-    },
-    [types.ADD_COUNT_STEP2](state, payload) {
-      state.count = state.count + payload.step + payload.n
-    },
-    [types.CHANGE_MUSIC_LIST](state, payload) {
-      // console.log('CHANGE_MUSIC_LIST mutation')
-      state.musicList = payload
-    },
-  },
+  // mutations: {
+  //   [types.ADD_COUNT](state) {
+  //     state.count++
+  //   },
+  //   [types.ADD_COUNT_STEP](state, payload) {
+  //     state.count += payload
+  //   },
+  //   [types.ADD_COUNT_STEP2](state, payload) {
+  //     state.count = state.count + payload.step + payload.n
+  //   },
+  //   [types.CHANGE_MUSIC_LIST](state, payload) {
+  //     // console.log('CHANGE_MUSIC_LIST mutation')
+  //     state.musicList = payload
+  //   },
+  // },
+  mutations: mutations,
   actions: {
     addCountAction(context) {
       console.log(context.state)
@@ -115,3 +117,23 @@ export default new Vuex.Store({
     moduleA,
   },
 })
+// if (module.hot) {
+//   // 使 action 和 mutation 成为可热重载模块
+//   module.hot.accept(['./mutations', './modules/moduleA'], () => {
+//     // 获取更新后的模块
+//     // 因为 babel 6 的模块编译格式问题，这里需要加上 `.default`
+//     /* eslint global-require:'off' */
+//     const newMutations = require('./mutations').default
+//     const newModuleA = require('./modules/moduleA').default
+//     // const newModuleB = require('./modules/moduleB').default
+//     // 加载新模块
+//     store.hotUpdate({
+//       mutations: newMutations,
+//       modules: {
+//         moduleA: newModuleA,
+//       },
+//     })
+//   })
+// }
+
+export default store

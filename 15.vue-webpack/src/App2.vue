@@ -27,10 +27,19 @@ export default {
   },
   mounted() {
     console.log(this.$store);
-    setTimeout(() => {
-      // this.$store.state.count++
-      this.$store.state.arr[1] = 4
+    setInterval(() => {
+      this.$store.commit('ADD_COUNT')
     }, 3000)
+
+
+    this.$store.subscribe((mutation, state) => {
+      console.log(mutation)
+      console.log(state)
+    })
+    this.$store.subscribeAction((action, state) => {
+      console.log(action)
+      console.log(state)
+    })
   },
   /* eslint vue/order-in-components:'off' */
   computed: {
@@ -109,5 +118,6 @@ export default {
     this.loadStockPrice()
     this.loadStockPrice2()
   },
+
 }
 </script>

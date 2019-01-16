@@ -1,9 +1,10 @@
 import moduleB from './moduleB'
+import mutationA from './mutationA'
 
 export default {
   namespaced: true,
   state: {
-    count: 1,
+    count: 33,
     msg: 'hi,moduleA',
   },
   getters: {
@@ -15,11 +16,13 @@ export default {
     },
   },
   /* eslint no-param-reassign:'off' */
-  mutations: {
-    aAddCount(state) {
-      state.count += 1
-    },
-  },
+  // mutations: {
+  //   aAddCount(state) {
+  //     state.count += 1
+  //   },
+  // },
+
+  mutations: mutationA,
   actions: {
     actionModuleA1({
       state, getters, commit, dispatch, rootGetters, rootState,
