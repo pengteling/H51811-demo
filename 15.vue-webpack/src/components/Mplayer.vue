@@ -19,14 +19,15 @@ export default {
     audio() {
       return this.$refs.audio
     },
-    player() {
-      return this.$store.state.player
-    },
+    ...mapState('player', ['paused', 'changeTime', 'volume']),
+    // player() {
+    //   return this.$store.state.player
+    // },
     // ...mapState('player',['paused','volume',''])
   },
   /* eslint object-shorthand:'off' */
   watch: {
-    'player.paused'(newVal, oldVal) {
+    paused(newVal, oldVal) {
       this.$nextTick(() => {
         if (!newVal) {
           this.audio.play()
@@ -43,10 +44,10 @@ export default {
     //   }
     //   // this.audio.currentTime = newVal
     // },
-    'player.changeTime'(val) {
+    changeTime(val) {
       this.audio.currentTime = val
     },
-    'player.volume': {
+    volume: {
       handler(newVal) {
         this.$nextTick(() => {
           this.audio.volume = newVal
@@ -59,14 +60,14 @@ export default {
   mounted() {
     console.log('mounted')
     this.audio.oncanplay = () => {
-      if (!this.player.paused) {
+      if (!this.paused) {
         this.audio.play()
       }
     }
     console.log(this.audio.volume)
   },
   methods: {
-    ...mapMutations('player', ['GET_DURATION']),
+    ...mapMutations('player', ['GET_DURATION', 'GET_CURRENT_TIME']),
     getDuration() {
       // console.log(this.audio.duration)
       // // this.player.duration = this.audio.duration
@@ -74,12 +75,13 @@ export default {
       this.GET_DURATION(this.audio.duration)
     },
     getCurrentTime() {
-      this.player.currentTime = this.audio.currentTime
+      // this.player.currentTime = this.audio.currentTime
+      this.GET_CURRENT_TIME(this.audio.currentTime)
       // EventBus.$emit('timeupdate', this.audio.currentTime)
     },
     toggleNext() {
       console.log('toggleNext')
-      this.$emit('toggleNext')
+      // this.$emit('toggleNext')
     },
   },
 

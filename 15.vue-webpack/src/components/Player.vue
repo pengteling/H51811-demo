@@ -31,7 +31,7 @@
                 ></div>
               </div> -->
               <ProgressBar
-                :progress="player.volume * 100"
+                :progress="volume * 100"
                 @changeProgress="changeVolume"
               />
             </div>
@@ -56,7 +56,7 @@
               @click="prevNext('prev')"
             ></i><i
               class="icon ml20"
-              :class="player.paused?'play':'pause'"
+              :class="paused?'play':'pause'"
               @click="playPause"
             ></i><i
               class="icon next ml20"
@@ -75,7 +75,7 @@
           <img
             :src="musicItem.cover"
             :alt="musicItem.title"
-            :class="player.paused ? 'pause':'play'"
+            :class="paused ? 'pause':'play'"
           >
         </router-link>
       </div>
@@ -84,33 +84,47 @@
 </template>
 <script>
 import './player.scss'
-import { formatTime } from '../utils'
+import { mapGetters, mapState, mapMutations } from 'vuex'
+
 import ProgressBar from '@/ProgressBar'
 
 export default {
   name: 'Player',
   components: { ProgressBar },
-  inheritAttrs: false,
-  props: ['musicItem', 'player', 'repeatType'],
-  data() {
-    return {
-      // paused: true,
-    }
-  },
+  // inheritAttrs: false,
+  // props: ['musicItem', 'player', 'repeatType'],
+  // data() {
+  //   return {
+  //     // paused: true,
+  //   }
+  // },
   computed: {
-    leftTime() {
-      return formatTime(this.player.duration - this.player.currentTime)
-    },
-    currentPercentAbsoulte() {
-      return this.player.currentTime / this.player.duration * 100
-    },
+    ...mapGetters('list', {
+      musicItem: 'currentMusicItem',
+    }),
+    ...mapGetters('player', ['leftTime', 'currentPercentAbsoulte']),
+    ...mapState('list', ['repeatType']),
+    ...mapState('player', ['paused', 'volume']),
+    // leftTime() {
+    //   return formatTime(this.player.duration - this.player.currentTime)
+    // },
+    // currentPercentAbsoulte() {
+    //   return this.player.currentTime / this.player.duration * 100
+    // },
   },
   methods: {
-    playPause() {
-      this.player.paused = !this.player.paused
-      // this.$emit('playPause')
-    },
-    changeProgress(progress) {
+    ...mapMutations('player', {
+      playPause: 'PLAY_PAUSE',
+      changeProgress: 'CHANGE_PROGRESS',
+      changeVolume: 'CHANGE_VOLUME',
+      changeRepeatType: 'CHANGE_REPEAT_TYPE',
+      prevNext: 'PREV_NEXT',
+      // prevNext
+
+    }),
+
+
+    /* changeProgress(progress) {
       // this.player.currentTime = progress * this.player.duration
       this.player.changeTime = progress * this.player.duration
     },
@@ -122,7 +136,7 @@ export default {
     },
     prevNext(type) {
       this.$emit('prevNext', type)
-    },
+    }, */
   },
 }
 </script>
