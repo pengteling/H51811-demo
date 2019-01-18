@@ -6,13 +6,13 @@
         :key="index"
         :music-item="item"
         :focus="item === musicItem"
-        @changeMusic="changeMusic"
       >
       </MusicItem>
     </ul>
   </div>
 </template>
 <script>
+import { mapState, mapGetters } from 'vuex'
 import MusicItem from './MusicItem'
 
 export default {
@@ -21,11 +21,20 @@ export default {
     MusicItem,
   },
   inheritAttrs: false,
-  props: ['musicList', 'musicItem'],
+  // props: ['musicList', 'musicItem'],
+  computed: {
+    ...mapState('list', ['musicList']),
+    ...mapGetters('list', {
+      musicItem: 'currentMusicItem',
+    }),
+  },
+
   methods: {
-    changeMusic(musicItem) {
-      this.$emit('changeMusic', musicItem)
-    },
+
+    // changeMusic(musicItem) {
+    //   //this.$emit('changeMusic', musicItem)
+
+    // },
   },
 
 }

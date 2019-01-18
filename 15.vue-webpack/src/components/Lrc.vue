@@ -13,23 +13,27 @@
   </div>
 </template>
 <script>
-import EventBus from '../EventBus'
+import { mapState, mapGetters } from 'vuex'
 import { parseLrc } from '../utils'
 
 export default {
   name: 'Lrc',
   inheritAttrs: false,
-  props: ['musicItem', 'player'],
+  // props: ['musicItem', 'player'],
   // data() {
   //   return {
   //     curli: 0,
   //   }
   // },
   computed: {
+    ...mapGetters('list', {
+      musicItem: 'currentMusicItem',
+    }),
+    ...mapState('player', ['currentTime']),
     curli() {
       let curli = 0
       this.lrc.forEach((line, i) => {
-        if (this.player.currentTime > line[0]) {
+        if (this.currentTime > line[0]) {
           curli = i
         }
       })

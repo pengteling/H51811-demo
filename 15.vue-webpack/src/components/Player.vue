@@ -117,10 +117,13 @@ export default {
       playPause: 'PLAY_PAUSE',
       changeProgress: 'CHANGE_PROGRESS',
       changeVolume: 'CHANGE_VOLUME',
-      changeRepeatType: 'CHANGE_REPEAT_TYPE',
-      prevNext: 'PREV_NEXT',
+
       // prevNext
 
+    }),
+    ...mapMutations('list', {
+      changeRepeatType: 'CHANGE_REPEAT_TYPE',
+      prevNext: 'PREV_NEXT',
     }),
 
 

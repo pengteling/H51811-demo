@@ -9,7 +9,9 @@
 </template>
 <script>
 // import EventBus from '../EventBus'
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import {
+  mapState, mapGetters, mapMutations, mapActions,
+} from 'vuex'
 
 export default {
   // props: ['url', 'player'],
@@ -65,6 +67,10 @@ export default {
       }
     }
     console.log(this.audio.volume)
+    /* 调试  */
+    this.$store.subscribeAction((action, state) => {
+      console.log(action)
+    })
   },
   methods: {
     ...mapMutations('player', ['GET_DURATION', 'GET_CURRENT_TIME']),
@@ -79,11 +85,14 @@ export default {
       this.GET_CURRENT_TIME(this.audio.currentTime)
       // EventBus.$emit('timeupdate', this.audio.currentTime)
     },
-    toggleNext() {
-      console.log('toggleNext')
-      // this.$emit('toggleNext')
-    },
+    ...mapActions('list', ['toggleNext']),
+    // toggleNext() {
+    //   //console.log('toggleNext')
+    //   // this.$emit('toggleNext')
+
+    // },
   },
+
 
 }
 </script>

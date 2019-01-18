@@ -1,0 +1,4 @@
+export const CHANGE_REPEAT_TYPE = 'CHANGE_REPEAT_TYPE'
+export const PREV_NEXT = 'PREV_NEXT'
+export const CHANGE_MUSIC = 'CHANGE_MUSIC'
+export const DELETE_MUSIC = 'DELETE_MUSIC'
