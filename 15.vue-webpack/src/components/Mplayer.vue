@@ -72,6 +72,9 @@ export default {
       console.log(action)
     })
   },
+  created() {
+    this.getList()
+  },
   methods: {
     ...mapMutations('player', ['GET_DURATION', 'GET_CURRENT_TIME']),
     getDuration() {
@@ -85,7 +88,7 @@ export default {
       this.GET_CURRENT_TIME(this.audio.currentTime)
       // EventBus.$emit('timeupdate', this.audio.currentTime)
     },
-    ...mapActions('list', ['toggleNext']),
+    ...mapActions('list', ['toggleNext', 'getList']),
     // toggleNext() {
     //   //console.log('toggleNext')
     //   // this.$emit('toggleNext')

@@ -54,5 +54,8 @@ export default {
       state.currentIndex = 0
     }
   },
+  [types.GET_MUSIC_LIST](state, musicList) {
+    state.musicList = musicList
+  },
   // },
 }
