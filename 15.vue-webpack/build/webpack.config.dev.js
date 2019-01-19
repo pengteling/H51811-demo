@@ -43,6 +43,13 @@ const config = {
       //   target:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
       //   changeOrigin: true
       // }
+      '/api/vkey2':{
+        target:'https://u.y.qq.com/cgi-bin/musicu.fcg?_=1547922081791',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api/vkey2':''
+        }
+      }
     }
   },
   module:{
