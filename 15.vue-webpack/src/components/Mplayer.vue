@@ -58,13 +58,37 @@ export default {
       },
       immediate: true,
     },
-    async 'currentMusicItem.file'() {
+    async 'currentMusicItem.file2'() {
       this.getVkey2()
       // const vkey = await this.getVkey()
       // const url = `http://dl.stream.qqmusic.qq.com/C400${this.currentMusicItem.file}.m4a?vkey=${vkey}`
       // // const url = `http://isure.stream.qqmusic.qq.com/${vkey}`
       // console.log(url)
       // this.audio.src = url
+    },
+    'currentMusicItem.file'(newVal) {
+      axios.post('/api/vkey2', {
+
+        req_0: {
+          module: 'vkey.GetVkeyServer',
+          method: 'CgiGetVkey',
+          param: {
+            guid: '900811868', songmid: [this.currentMusicItem.file], songtype: [], uin: '0', loginflag: 0, platform: '23', h5to: 'speed',
+          },
+        },
+        comm: {
+          g_tk: 5381, uin: 0, format: 'json', ct: 23, cv: 0,
+        },
+      }).then((res) => {
+        console.log(res.data.req_0.data.midurlinfo[0])
+        const songData = res.data.req_0.data.midurlinfo[0]
+        if (songData.purl) {
+          const url = `http://isure.stream.qqmusic.qq.com/${songData.purl}`
+          this.audio.src = url
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     },
   },
   mounted() {

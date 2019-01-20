@@ -57,5 +57,8 @@ export default {
   [types.GET_MUSIC_LIST](state, musicList) {
     state.musicList = musicList
   },
+  [types.SET_LRC](state, payload) {
+    state.musicList[state.musicList.findIndex(item => item === payload.item)].lrc = payload.lrc
+  },
   // },
 }
