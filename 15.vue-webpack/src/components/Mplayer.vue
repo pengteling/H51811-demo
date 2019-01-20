@@ -1,7 +1,6 @@
 <template>
   <audio
     ref="audio"
-    :src="currentMusicItem.file"
     @loadedmetadata="getDuration"
     @timeupdate="getCurrentTime"
     @ended="toggleNext"
@@ -12,6 +11,7 @@
 import {
   mapState, mapGetters, mapMutations, mapActions,
 } from 'vuex'
+import axios from 'axios'
 
 export default {
   // props: ['url', 'player'],
@@ -58,6 +58,14 @@ export default {
       },
       immediate: true,
     },
+    async 'currentMusicItem.file'() {
+      this.getVkey2()
+      // const vkey = await this.getVkey()
+      // const url = `http://dl.stream.qqmusic.qq.com/C400${this.currentMusicItem.file}.m4a?vkey=${vkey}`
+      // // const url = `http://isure.stream.qqmusic.qq.com/${vkey}`
+      // console.log(url)
+      // this.audio.src = url
+    },
   },
   mounted() {
     console.log('mounted')
@@ -94,8 +102,86 @@ export default {
     //   // this.$emit('toggleNext')
 
     // },
-  },
+    getVkey() {
+      return axios.get('/api/getVkey', {
+        params: {
 
+
+          '-': 'getplaysongvkey2098563263724238',
+          g_tk: 39938160,
+          loginUin: 33460202,
+          hostUin: 0,
+          format: 'json',
+          inCharset: 'utf8',
+          outCharset: 'utf-8',
+          notice: 0,
+          platform: 'yqq.json',
+          needNewCode: 0,
+          // {"req_0":{"module":"vkey.GetVkeyServer","method":"CgiGetVkey","param":{"guid":"960257530","songmid":["002zW45S1lFxp9"],"songtype":[0],"uin":"0","loginflag":1,"platform":"20"}},"comm":{"uin":0,"format":"json","ct":24,"cv":0}}
+
+
+          // {"req_0":{"module":"vkey.GetVkeyServer","method":"CgiGetVkey","param":{"guid":"960257530","songmid":["000Qepff3UyUWO"]},"songtype":[0],"uin":"0","loginflag":1,"platform":"20"},"comm":{"uin":"0","format":"json","ct":24,"cv":0}}
+
+          data: {
+            req: { module: 'CDN.SrfCdnDispatchServer', method: 'GetCdnDispatch', param: { guid: '960257530', calltype: 0, userip: '' } },
+            req_0: {
+              module: 'vkey.GetVkeyServer',
+              method: 'CgiGetVkey',
+              param: {
+                guid: '960257530', songmid: [this.currentMusicItem.file], songtype: [0], uin: '33460202', loginflag: 1, platform: '20',
+              },
+            },
+            comm: {
+              uin: 33460202, format: 'json', ct: 24, cv: 0,
+            },
+          },
+        },
+      }).then((res) => {
+        console.log(res);
+        console.log(res.data.req.data.vkey);
+        return res.data.req.data.vkey
+      })
+    },
+    getVkey2() {
+      axios.get('/api/vkey', {
+        params: {
+          g_tk: 5381,
+          // jsonpCallback:'MusicJsonCallback41947488562419744',
+
+          loginUin: 0,
+          hostUin: 0,
+          format: 'json',
+          inCharset: 'utf-8',
+          outCharset: 'utf-8',
+          notice: 0,
+          platform: 'yqq',
+          needNewCode: 0,
+          cid: 205361747,
+          // callback:'MusicJsonCallback41947488562419744',
+          uin: 0,
+          songmid: this.currentMusicItem.file,
+          filename: `C400${this.currentMusicItem.file}.m4a`,
+          guid: 1044092206,
+        },
+      }).then((response) => {
+        console.log(response);
+        const songinfo = response.data.data.items[0]
+        const songurl = `http://dl.stream.qqmusic.qq.com/${songinfo.filename}?vkey=${songinfo.vkey}&guid=1044092206&uin=0&fromtag=66`
+        this.$refs.audio.src = songurl
+        // this.playPause()
+        // this.$refs.audio.oncanplay = ()=>{
+        //   console.log("canplay");
+        //   this.playPause()
+        // }
+
+        // if(!this.paused){
+        //   this.$refs.audio.oncanplay = ()=>{
+        //     //this.$refs.audio.play()
+        //   }
+        // }
+      })
+    },
+  },
 
 }
 </script>
