@@ -78,12 +78,17 @@ export default {
       },
       immediate: true,
     },
+    'musicItem.file'(newVal) {
+      this.getLrc()
+    },
   },
   mounted() {
     // EventBus.$on('timeupdate', (time) => {
     //   console.log('歌词页获取timeupdate时间', time);
     // })
-    this.getLrc() // 写进action!!!
+    if (this.musicItem.file) {
+      this.getLrc() // 写进action!!!
+    }
   },
   methods: {
     getLrc() {
