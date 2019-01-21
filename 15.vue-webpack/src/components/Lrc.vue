@@ -14,6 +14,7 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
+import axios from 'axios'
 import { parseLrc } from '../utils'
 
 export default {
@@ -48,8 +49,8 @@ export default {
           txt: itemArr[1],
         }
       }) */
-
-      return parseLrc(this.musicItem.lrc)
+      // console.log('computed', this.musicItem.lrc)
+      return this.musicItem.lrc ? parseLrc(this.musicItem.lrc) : []
     },
   },
   /* 也可以不用事件总线 */
@@ -68,18 +69,64 @@ export default {
     curli: {
       handler(newVal) {
         this.$nextTick().then(() => {
-          const h = this.$refs.cur[0].offsetTop - 330
-          console.log(h)
-          this.$refs.lrcul.scrollTop = h
+          if (this.musicItem.lrc) {
+            const h = this.$refs.cur[0].offsetTop - 330
+            console.log(h)
+            this.$refs.lrcul.scrollTop = h
+          }
         })
       },
       immediate: true,
     },
+    'musicItem.file'(newVal) {
+      if (!this.musicItem.lrc) {
+        this.getLrc()
+      }
+    },
+
+    // 'musicItem.file': {
+    //   handler() {
+    //     this.getLrc()
+    //   },
+    //   immediate: true,
+    // },
   },
   mounted() {
     // EventBus.$on('timeupdate', (time) => {
     //   console.log('歌词页获取timeupdate时间', time);
     // })
+    // this.getLrc()
+    if (this.musicItem.file && !this.musicItem.lrc) {
+      this.getLrc()
+    }
+  },
+  methods: {
+    getLrc() {
+      axios.get('/api/getLrc', {
+        params: {
+          '-': 'MusicJsonCallback_lrc',
+          pcachetime: 1548072890239,
+          songmid: this.musicItem.file,
+          g_tk: 5381,
+          loginUin: 0,
+          hostUin: 0,
+          format: 'json',
+          inCharset: 'utf8',
+          outCharset: 'utf-8',
+          notice: 0,
+          platform: 'yqq.json',
+          needNewCode: 0,
+          nobase64: 1,
+        },
+      }).then((res) => {
+        console.log(res.data.lyric)
+        const lrc = res.data.lyric
+        this.$store.commit('list/SET_LRC', {
+          lrc,
+          item: this.musicItem,
+        })
+      })
+    },
   },
 }
 </script>

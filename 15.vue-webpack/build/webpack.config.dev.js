@@ -12,7 +12,7 @@ const config = {
   mode:'development',
   devtool: 'source-map',
   devServer:{
-    before(app){
+    before(){
       app.get('/api/vkey', function(req,res){
         var url = 'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg'
         axios.get(url, {
@@ -39,6 +39,34 @@ const config = {
         target:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?tpl=3&page=detail&date=2018-12-24&topid=4&type=top&song_begin=0&song_num=30&g_tk=1507819077&loginUin=3001418919&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0',
         changeOrigin: true
       },
+
+      '/api/getVkey':{
+        target:'https://u.y.qq.com/cgi-bin/musicu.fcg',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api/getVkey':''
+        },
+        // bypass:function(req,res,proxyOptions){
+        //   req.headers.referer = 'https://c.y.qq.com',
+        //   req.headers.host='c.y.qq.com'
+        // }
+
+      }
+      ,
+
+      '/api/getLrc':{
+        target:'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api/getLrc':''
+        },
+        bypass:function(req,res,proxyOptions){
+          req.headers.referer = 'https://c.y.qq.com',
+          req.headers.host='c.y.qq.com'
+        }
+
+      }
+
       // '/api/vkey':{
       //   target:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
       //   changeOrigin: true

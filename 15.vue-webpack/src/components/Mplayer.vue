@@ -1,7 +1,6 @@
 <template>
   <audio
     ref="audio"
-    :src="currentMusicItem.file"
     @loadedmetadata="getDuration"
     @timeupdate="getCurrentTime"
     @ended="toggleNext"
@@ -12,6 +11,7 @@
 import {
   mapState, mapGetters, mapMutations, mapActions,
 } from 'vuex'
+import axios from 'axios'
 
 export default {
   // props: ['url', 'player'],
@@ -58,6 +58,9 @@ export default {
       },
       immediate: true,
     },
+    'currentMusicItem.file'(newVal) {
+      this.getVkey()
+    },
   },
   mounted() {
     console.log('mounted')
@@ -94,6 +97,27 @@ export default {
     //   // this.$emit('toggleNext')
 
     // },
+    getVkey() {
+      axios.post('/api/getVkey', {
+        req_0: {
+          module: 'vkey.GetVkeyServer',
+          method: 'CgiGetVkey',
+          param: {
+            guid: '900811868', songmid: [this.currentMusicItem.file], songtype: [], uin: '0', loginflag: 0, platform: '23', h5to: 'speed',
+          },
+        },
+        comm: {
+          g_tk: 5381, uin: 0, format: 'json', ct: 23, cv: 0,
+        },
+      }).then((res) => {
+        console.log(res.data.req_0.data.midurlinfo[0].purl)
+        const purl2 = res.data.req_0.data.midurlinfo[0].purl
+        if (purl2) {
+          const url = `http://117.34.59.29/amobile.music.tc.qq.com/${purl2}`
+          this.audio.src = url
+        }
+      })
+    },
   },
 
 
