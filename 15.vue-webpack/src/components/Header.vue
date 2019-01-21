@@ -10,6 +10,7 @@
     <h1 class="caption">
       Vue music player
     </h1>
+    <!-- <Alerts></Alerts> -->
   </div>
 </template>
 
