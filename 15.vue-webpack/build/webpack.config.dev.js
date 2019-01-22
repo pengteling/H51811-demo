@@ -1,43 +1,41 @@
-const baseConfig = require('./webpack.config.base')
 const merge = require('webpack-merge')
 const webpack = require('webpack')
 const express = require('express')
 const axios = require('axios')
+const baseConfig = require('./webpack.config.base')
 
 const app = express()
 const apiRoutes = express.Router()
-app.use('/api',apiRoutes)
+app.use('/api', apiRoutes)
 
 const config = {
-  mode:'development',
+  mode: 'development',
   devtool: 'source-map',
   devServer:{
     before(){
       app.get('/api/vkey', function(req,res){
         var url = 'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg'
         axios.get(url, {
-          headers:{
-            referer:'https://c.y.qq.com',
-            host:'c.y.qq.com'
+          headers: {
+            referer: 'https://c.y.qq.com',
+            host: 'c.y.qq.com',
           },
-          params:req.query
-        }).then(response =>
-          res.json(response.data)
-          )
-        .catch(err=>console.log(err))
+          params: req.query,
+        }).then(response => res.json(response.data))
+          .catch(err => console.log(err))
       })
     },
-    contentBase:"./dist",
-    hot:true,
-    port:8888,
-    host:'0.0.0.0',
+    contentBase: './dist',
+    hot: true,
+    port: 8888,
+    host: '0.0.0.0',
     historyApiFallback: true,
-    proxy:{
+    proxy: {
       // jsonp 也可以
       // https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?tpl=3&page=detail&date=2019_02&topid=26&type=top&song_begin=0&song_num=30&g_tk=5381&loginUin=0&hostUin=0&format=jsonp&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0&jsonpCallback=music
-      '/api/list':{
-        target:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?tpl=3&page=detail&date=2018-12-24&topid=4&type=top&song_begin=0&song_num=30&g_tk=1507819077&loginUin=3001418919&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0',
-        changeOrigin: true
+      '/api/list': {
+        target: 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?tpl=3&page=detail&date=2018-12-24&topid=4&type=top&song_begin=0&song_num=30&g_tk=1507819077&loginUin=3001418919&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0',
+        changeOrigin: true,
       },
 
       '/api/getVkey':{
@@ -71,62 +69,81 @@ const config = {
       //   target:'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg',
       //   changeOrigin: true
       // }
-    }
+      ,'/api/vkey2': {
+        target: 'https://u.y.qq.com/cgi-bin/musicu.fcg?_=1547922081791',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api/vkey2': '',
+        },
+      },
+      '/api/lrc': {
+        target: 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api/lrc': '',
+        },
+        bypass(req, res, proxyOptions) {
+          req.headers.host = 'c.y.qq.com'
+          req.headers.referer = 'https://c.y.qq.com'
+        },
+      },
+
+    },
   },
-  module:{
-    rules:[
+  module: {
+    rules: [
       {
         test: /\.scss$/,
-        use:[
+        use: [
           'vue-style-loader',
           {
-            loader:'css-loader',
-            options:{
-              sourceMap:true
-            }
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
           },
           {
-            loader:'postcss-loader',
-            options:{
-              sourceMap:true
-            }
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+            },
           },
           {
-            loader:'sass-loader',
-            options:{
-              sourceMap:true
-            }
-          }
-        ]
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,
-        use:[
+        use: [
           'vue-style-loader',
           {
-            loader:'css-loader',
-            options:{
-              sourceMap:true,
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
               // modules:true,
               // localIdentName:'[path]-[name]-[hash:base64:5]'
-            }
+            },
           },
           {
-            loader:'postcss-loader',
-            options:{
-              sourceMap:true
-            }
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+            },
           },
-        ]
+        ],
       },
       {
         resourceQuery: /blockType=docs/,
-        loader: require.resolve('./docs-loader.js')
-      }
-    ]
+        loader: require.resolve('./docs-loader.js'),
+      },
+    ],
   },
-  plugins:[
+  plugins: [
     new webpack.HotModuleReplacementPlugin(),
-  ]
+  ],
 }
-module.exports = merge(baseConfig,config)
+module.exports = merge(baseConfig, config)
