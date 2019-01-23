@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 import { parseLrc } from '../utils'
 
@@ -101,7 +101,8 @@ export default {
     }
   },
   methods: {
-    getLrc() {
+    ...mapActions('list', ['getLrc']),
+    /* getLrc() {
       axios.get('/api/getLrc', {
         params: {
           '-': 'MusicJsonCallback_lrc',
@@ -126,7 +127,7 @@ export default {
           item: this.musicItem,
         })
       })
-    },
+    }, */
   },
 }
 </script>
