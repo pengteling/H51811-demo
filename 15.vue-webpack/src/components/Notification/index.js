@@ -1,5 +1,5 @@
 import Notification from './Notification'
-
+import notify from './functionNotify'
 // export default {
 //   install(Vue, options) {
 //     Vue.component(Notification.name, Notification)
@@ -7,4 +7,5 @@ import Notification from './Notification'
 // }
 export default function (Vue, options) {
   Vue.component(Notification.name, Notification)
+  Vue.prototype.$notify = notify
 }

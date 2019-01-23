@@ -1,15 +1,25 @@
 <template>
-  <div class="notification">
-    <span class="content">
-      {{ content }}
-    </span>
-    <a
-      class="btn"
-      @click.prevent="close"
+  <transition
+    name="fade"
+    appear
+    @after-enter="afterEnter"
+  >
+    <div
+      v-if="visible"
+      class="notification"
+      :style="styleObj"
     >
-      关闭
-    </a>
-  </div>
+      <span class="content">
+        {{ content }}
+      </span>
+      <a
+        class="btn"
+        @click.prevent="close"
+      >
+        关闭
+      </a>
+    </div>
+  </transition>
 </template>
 <script>
 export default {
@@ -19,9 +29,50 @@ export default {
       type: String,
       required: true,
     },
+    autoClose: {
+      type: Number,
+      default: 3000,
+    },
+  },
+  data() {
+    return {
+      visible: true,
+      verticalOffset: 20,
+      height: 0,
+    }
+  },
+  computed: {
+    styleObj() {
+      return {
+        bottom: `${this.verticalOffset}px`,
+      }
+    },
+  },
+
+  mounted() {
+    this.autoCloseFn()
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer)
   },
   methods: {
-    close() {},
+    close() {
+      this.visible = false
+      this.$emit('close')
+      this.$nextTick().then(() => {
+        this.$destroy()
+      })
+    },
+    autoCloseFn() {
+      this.timer = setTimeout(() => {
+        this.close()
+      }, this.autoClose)
+    },
+    afterEnter() {
+      console.log(this.$el.offsetHeight)
+      this.height = this.$el.offsetHeight
+    },
+
   },
 }
 </script>

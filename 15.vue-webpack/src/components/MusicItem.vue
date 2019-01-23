@@ -25,8 +25,15 @@ export default {
     //   this.$emit('changeMusic', this.musicItem)
     // },
     ...mapMutations('list', {
-      changeMusicItem: 'CHANGE_MUSIC',
+      changeMusicItemStore: 'CHANGE_MUSIC',
     }),
+    changeMusicItem(item) {
+      this.changeMusicItemStore(item)
+      this.$notify({
+        content: `播放${item.title} - ${item.artist}`,
+        autoClose: 30000,
+      })
+    },
     // deleteMusicItem() {
     //   // e.stopPropagation()
     //   // EventBus.$emit('deleteMusic', this.musicItem)
