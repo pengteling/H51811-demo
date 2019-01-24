@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      ref="elTable"
       :data="cartList"
       style="width: 100%"
       @selection-change="handlerSelectionChange"
@@ -79,16 +80,31 @@ export default {
         selected: false,
       },
       ],
-      selectList: [],
+      // selectList: [],
     }
   },
   computed: {
     // selectList() {
     //   return this.cartList.filter(item => item.selected)
     // },
-    // selectList:{
-    //   get(){}
-    // },
+    selectList: {
+      get() {
+        return this.cartList.filter(item => item.selected)
+      },
+      set(val) {
+        // Object.assign(this.cartList, val)
+        this.cartList.forEach((item) => {
+          if (val.includes(item)) {
+            item.selected = true
+          } else {
+            item.selected = false
+          }
+        })
+        // val.forEach((item) => {
+        //   item.selected = true
+        // })
+      },
+    },
     total_num() {
       return this.cartList.reduce((totalNum, item) => totalNum + item.buy_num, 0)
     },
@@ -98,6 +114,12 @@ export default {
     total_price() {
       return this.selectList.reduce((totalPrice, item) => totalPrice + item.buy_num * item.price, 0)
     },
+  },
+  mounted() {
+    /* 初始选中状态 */
+    this.selectList.forEach((item) => {
+      this.$refs.elTable.toggleRowSelection(item)
+    })
   },
   methods: {
     add(item) {
