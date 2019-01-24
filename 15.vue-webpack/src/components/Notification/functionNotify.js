@@ -28,7 +28,8 @@ const notify = (options) => {
   })
   console.log(instance)
   instance.vm = instance.$mount()
-  document.body.appendChild(instance.vm.$el)
+  // document.body.appendChild(instance.vm.$el)
+  document.querySelector('.components-header').appendChild(instance.vm.$el)
 
   const verticalOffset = instances.reduce((h, item) => h + item.$el.offsetHeight + 56, 20)
   console.log(verticalOffset)

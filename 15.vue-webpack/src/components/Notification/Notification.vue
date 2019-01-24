@@ -50,6 +50,8 @@ export default {
   },
 
   mounted() {
+    console.log('notify', this.$pluginStore)
+    console.log('notify', this.$pluginRouter)
     this.autoCloseFn()
   },
   beforeDestroy() {

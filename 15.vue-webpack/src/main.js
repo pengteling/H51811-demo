@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import Notification from '@/Notification'
 
-Vue.use(Notification)
+Vue.use(Notification, { store, router })
 
 /* eslint no-new: "off" */
 new Vue({
