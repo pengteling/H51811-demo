@@ -1,6 +1,7 @@
 const htmlWebpackPlugin = require('html-webpack-plugin')
 // webpack.config.js
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
     extensions:['*','.vue','.js','.jsx'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js', // 用 webpack 1 时需用 'vue/dist/vue.common.js'
-      '@': path.resolve(__dirname,'../src/components')
+      '@': path.resolve(__dirname,'../src')
     }
   },
   module:{
@@ -68,6 +69,14 @@ module.exports = {
       // inject:
     }),
     // 请确保引入这个插件！
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    // 静态资源复制到Dist
+    new CopyWebpackPlugin([
+      {
+        from:path.resolve(__dirname,'../static'),
+        to: path.resolve(__dirname,'../dist/static'),
+        ignore:['.*']
+      }
+    ])
   ]
 }
