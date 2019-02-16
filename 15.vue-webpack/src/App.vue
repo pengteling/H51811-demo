@@ -5,7 +5,10 @@
   </div>
 </template>
 <script>
+// import 'normalize.css'
+import 'reset-css'
 import '@/style/comm.scss'
+import '@/style/app.scss'
 
 export default {
 
