@@ -8,4 +8,8 @@ export default {
   currentPercentAbsoulte(state) {
     return state.currentTime / state.duration * 100
   },
+  bufferedPercentAbsoulte(state) {
+    const val = state.buffered / state.duration * 100
+    return val > 100 ? 100 : val
+  },
 }

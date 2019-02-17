@@ -5,11 +5,11 @@
   >
     <!--start top-hd -->
     <div class="top-hd">
-      <a
+      <router-link
         class="logo"
-        href="/"
+        to="/"
         title="酷狗音乐"
-      ></a>
+      ></router-link>
 
       <a
         id="btnSearch"
@@ -18,7 +18,8 @@
       ></a>
     </div>
     <!--end top-hd -->
-    <Nav></Nav>
+    <Nav v-if="isNav"></Nav>
+    <GoBack v-if="!isNav"></GoBack>
     <Mplayer @getError="handlerError"></Mplayer>
     <Error
       v-if="isError"
@@ -29,6 +30,7 @@
 <script>
 import Nav from './nav'
 import Error from './Error'
+import GoBack from './goBack'
 import Mplayer from '@/components/Mplayer'
 
 export default {
@@ -37,9 +39,22 @@ export default {
     Nav,
     Mplayer,
     Error,
+    GoBack,
   },
   data() {
-    return { isError: false }
+    return { isError: false, isNav: true }
+  },
+  watch: {
+    '$route.name': {
+      handler(val) {
+        if (val === 'player') {
+          this.isNav = false
+        } else {
+          this.isNav = true
+        }
+      },
+      immediate: true,
+    },
   },
   methods: {
     handlerError() {

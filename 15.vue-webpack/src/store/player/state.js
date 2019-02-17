@@ -4,4 +4,5 @@ export default {
   duration: 0,
   currentTime: 0,
   changeTime: 0,
+  buffered: 0,
 }

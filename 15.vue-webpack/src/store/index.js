@@ -7,6 +7,16 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
+  state: {
+    isShowFtPlayer: false,
+  },
+  mutations: {
+    showFtPlayer(state, isShow) {
+      state.isShowFtPlayer = isShow
+    },
+
+  },
+
   modules: {
     list,
     player,

@@ -5,6 +5,9 @@ import Header from '@/views/header'
 
 import newSong from '@/views/newSong'
 
+const Player = () => import('@/views/player')
+// import Player from '@/views/player'
+
 Vue.use(Router)
 const routes = [
   {
@@ -18,6 +21,11 @@ const routes = [
         name: 'newSong',
         component: newSong,
         path: '',
+      },
+      {
+        name: 'player',
+        component: Player,
+        path: 'player',
       },
     ],
   },

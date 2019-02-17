@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="!paused"
+    v-show="isShowFtPlayer"
     id="ftPlayer"
     class="ft-player"
   >
@@ -41,7 +41,10 @@
         :class="paused? 'btn-play':'btn-pause'"
         @click="PLAY_PAUSE"
       ></i>
-      <i class="btn-next js-btnNext"></i>
+      <i
+        class="btn-next js-btnNext"
+        @click="PREV_NEXT('next')"
+      ></i>
       <!-- 此时只会出现两种情况，一个是免费，一个是试听免费，下载收费 -->
       <i
         class="ft-icon-download js-dialog-show"
@@ -58,9 +61,11 @@ export default {
   computed: {
     ...mapGetters('list', ['currentMusicItem']),
     ...mapState('player', ['paused']),
+    ...mapState(['isShowFtPlayer']),
   },
   methods: {
     ...mapMutations('player', ['PLAY_PAUSE']),
+    ...mapMutations('list', ['PREV_NEXT']),
   },
 }
 </script>
@@ -119,6 +124,10 @@ export default {
 }
 .btn-pause {
     background: url(../images/pause_icon.png) no-repeat;
+    background-size: 100%;
+}
+.btn-play {
+    background: url(../images/play_icon.png) no-repeat;
     background-size: 100%;
 }
 .btn-loading, .btn-next, .btn-pause, .btn-play, .ft-icon-download {

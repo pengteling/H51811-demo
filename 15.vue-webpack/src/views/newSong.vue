@@ -148,9 +148,12 @@ export default {
     ...mapActions('list', ['getList']),
     playSong(item) {
       this.$store.commit('list/CHANGE_MUSIC', item)
-      if (this.paused) {
-        this.$store.commit('player/PLAY_PAUSE')
-      }
+      this.$store.commit('showFtPlayer', true)
+      setTimeout(() => {
+        if (this.paused) {
+          this.$store.commit('player/PLAY_PAUSE')
+        }
+      }, 500)
     },
   },
 

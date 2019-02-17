@@ -5,6 +5,7 @@
     @loadedmetadata="getDuration"
     @timeupdate="getCurrentTime"
     @ended="toggleNext"
+    @progress="getBuffered"
   ></audio>
 </template>
 <script>
@@ -90,7 +91,7 @@ export default {
     this.getList()
   },
   methods: {
-    ...mapMutations('player', ['GET_DURATION', 'GET_CURRENT_TIME']),
+    ...mapMutations('player', ['GET_DURATION', 'GET_CURRENT_TIME', 'GET_BEFFERED']),
     getDuration() {
       // console.log(this.audio.duration)
       // // this.player.duration = this.audio.duration
@@ -101,6 +102,11 @@ export default {
       // this.player.currentTime = this.audio.currentTime
       this.GET_CURRENT_TIME(this.audio.currentTime)
       // EventBus.$emit('timeupdate', this.audio.currentTime)
+    },
+    getBuffered() {
+      const timeRanges = this.audio.buffered
+      const buffered = timeRanges.end(timeRanges.length - 1)
+      this.GET_BEFFERED(buffered)
     },
     ...mapActions('list', ['toggleNext', 'getList', 'getUrl']),
     // toggleNext() {

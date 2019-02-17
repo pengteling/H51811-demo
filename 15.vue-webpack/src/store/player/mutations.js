@@ -16,5 +16,8 @@ export default {
   [types.CHANGE_VOLUME](state, volume) {
     state.volume = volume
   },
+  [types.GET_BEFFERED](state, buffered) {
+    state.buffered = buffered
+  },
 
 }
