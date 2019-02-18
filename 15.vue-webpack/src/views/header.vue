@@ -47,7 +47,7 @@ export default {
   watch: {
     '$route.name': {
       handler(val) {
-        if (val === 'player') {
+        if (val === 'player' || val === 'list') {
           this.isNav = false
         } else {
           this.isNav = true

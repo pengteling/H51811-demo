@@ -4,6 +4,7 @@ export const evil = (fn) => {
   return new Fn(`return ${fn}`)()
 }
 
+export const formatCount = num => `${parseInt(num / 1000) / 10}万`
 
 export const formatTime = (num) => {
   const hh = parseInt(num / 3600, 10)
