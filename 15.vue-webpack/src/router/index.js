@@ -19,6 +19,7 @@ const routes = [
       default: Main,
       header: Header,
     },
+    // component: Main,
     children: [
       {
         name: 'newSong',

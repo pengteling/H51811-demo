@@ -9,10 +9,14 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
     isShowFtPlayer: false,
+    goBackTit: '',
   },
   mutations: {
     showFtPlayer(state, isShow) {
       state.isShowFtPlayer = isShow
+    },
+    setGoBackTit(state, tit) {
+      state.goBackTit = tit
     },
 
   },

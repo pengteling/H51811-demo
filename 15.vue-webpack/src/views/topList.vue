@@ -58,8 +58,10 @@
 <script>
 import axios from 'axios'
 import jsonp from 'jsonp'
+// import Mplayer from '@/components/Mplayer'
 
 export default {
+  // components: { Mplayer },
   data() {
     return {
       topList: [],

@@ -39,6 +39,18 @@ const config = {
         target:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?tpl=3&page=detail&date=2018-12-24&topid=4&type=top&song_begin=0&song_num=30&g_tk=1507819077&loginUin=3001418919&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0',
         changeOrigin: true
       },
+      '/api/getList':{
+        //target:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?g_tk=5381&uin=0&format=json&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&tpl=3&page=detail&type=top&topid=4&_=1550596585034'
+        target:'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api/getList':''
+        },
+        bypass:function(req,res,proxyOptions){
+          req.headers.referer = 'https://c.y.qq.com',
+          req.headers.host='c.y.qq.com'
+        }
+      },
 
       '/api/getVkey':{
         target:'https://u.y.qq.com/cgi-bin/musicu.fcg',

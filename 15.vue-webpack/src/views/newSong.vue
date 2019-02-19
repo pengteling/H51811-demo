@@ -134,8 +134,18 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import ftPlayer from './ftPlayer'
 
+
 export default {
-  components: { ftPlayer },
+  components: {
+    ftPlayer,
+
+  },
+  data() {
+    return {
+      isError: false,
+
+    }
+  },
   computed: {
     ...mapState('list', ['musicList']),
     ...mapState('player', ['paused']),
@@ -154,6 +164,9 @@ export default {
           this.$store.commit('player/PLAY_PAUSE')
         }
       }, 500)
+    },
+    handlerError() {
+      this.isError = true
     },
   },
 
