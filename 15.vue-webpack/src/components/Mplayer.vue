@@ -88,7 +88,8 @@ export default {
     })
   },
   created() {
-    this.getList()
+    // 如果初次加载则要请求数据
+    // this.getList()
   },
   methods: {
     ...mapMutations('player', ['GET_DURATION', 'GET_CURRENT_TIME', 'GET_BEFFERED']),

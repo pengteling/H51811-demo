@@ -11,7 +11,7 @@ export default {
     }
   },
   getList({ commit }) {
-    axios.get('/api/list').then((res) => {
+    return axios.get('/api/list').then((res) => {
       console.log(res)
       const songList = res.data.songlist
       const musicList = songList.map((item) => {
@@ -25,7 +25,47 @@ export default {
         }
       })
       console.log(musicList)
-      commit('GET_MUSIC_LIST', musicList)
+      commit('GET_SHOW_LIST', musicList)
+      return Promise.resolve(musicList)
+      // commit('GET_MUSIC_LIST', musicList)
+    })
+  },
+  getTopList({ commit }, topId) {
+    return axios.get('/api/getList',
+      {
+        params: {
+          g_tk: 5381,
+          uin: 0,
+          format: 'json',
+          inCharset: 'utf-8',
+          outCharset: 'utf-8',
+          notice: 0,
+          platform: 'h5',
+          needNewCode: 1,
+          tpl: 3,
+          page: 'detail',
+          type: 'top',
+          topid: topId,
+          _: +new Date(),
+          song_num: 100,
+        },
+      }).then((res) => {
+      console.log(res)
+      const songList = res.data.songlist
+      const musicList = songList.map((item) => {
+        const songData = item.data
+        return {
+          title: songData.songname,
+          artist: songData.singer.reduce((allsinger, singer) => (allsinger ? `${allsinger}、${singer.name}` : singer.name), ''),
+          file: songData.songmid,
+          cover: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${songData.albummid}.jpg?max_age=2592000`,
+          lrc: '',
+        }
+      })
+      console.log(musicList)
+      commit('GET_SHOW_LIST', musicList)
+      return Promise.resolve(musicList)
+      // commit('GET_MUSIC_LIST', musicList)
     })
   },
   getUrl({ commit }, songmid) {

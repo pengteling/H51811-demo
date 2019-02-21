@@ -160,6 +160,12 @@ export default {
         this.getLrc()
       }
     },
+    'currentMusicItem.title': {
+      handler(val) {
+        this.$store.commit('setGoBackTit', val)
+      },
+      immediate: true,
+    },
     curli: {
       handler(newVal) {
         this.$nextTick().then(() => {
@@ -175,6 +181,16 @@ export default {
       immediate: true,
     },
   },
+  created() {
+    console.log('getMusicList');
+    if (Object.keys(this.currentMusicItem).length === 0) {
+      this.getList().then(() => {
+        this.$store.commit('list/GET_MUSIC_LIST')
+      })
+      // this.$store.commit('list/GET_MUSIC_LIST')
+    }
+  },
+
   mounted() {
     if (this.currentMusicItem.file && !this.currentMusicItem.lrc) {
       this.getLrc()
@@ -182,7 +198,7 @@ export default {
     this.dragInit(this.$refs.dragBtn)
   },
   methods: {
-    ...mapActions('list', ['getLrc']),
+    ...mapActions('list', ['getLrc', 'getList']),
     ...mapMutations('player', ['PLAY_PAUSE', 'CHANGE_PROGRESS']),
     ...mapMutations('list', ['PREV_NEXT']),
     changeProgress(e) {

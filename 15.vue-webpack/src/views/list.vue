@@ -26,7 +26,7 @@
       class="panel-songslist"
     >
       <li
-        v-for="(item,index) in musicList"
+        v-for="(item,index) in showList"
         :key="index"
         class="panel-songslist-item"
         @click="playSong(item)"
@@ -54,15 +54,18 @@ import ftPlayer from './ftPlayer'
 export default {
   components: { ftPlayer },
   computed: {
-    ...mapState('list', ['musicList']),
+    ...mapState('list', ['showList']),
     ...mapState('player', ['paused']),
   },
   created() {
-    this.getList()
+    const topId = this.$route.params.id
+    if (topId) {
+      this.getTopList(topId)
+    }
   },
 
   methods: {
-    ...mapActions('list', ['getList']),
+    ...mapActions('list', ['getTopList']),
     playSong(item) {
       this.$store.commit('list/CHANGE_MUSIC', item)
       this.$store.commit('showFtPlayer', true)

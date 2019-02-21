@@ -5,6 +5,24 @@
     :class="{'bd-bottom':!paused}"
   >
     <!-- start 焦点图 -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div
+          v-for="slider in sliders"
+          :key="slider.id"
+          class="swiper-slide"
+        >
+          <a :href="slider.linkUrl">
+            <img
+              :src="slider.picUrl"
+              alt=""
+            >
+          </a>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+    </div>
     <!--  <div
       id="modSlider"
       class="mod-slider"
@@ -109,7 +127,7 @@
       class="panel-songslist"
     >
       <li
-        v-for="(item,index) in musicList"
+        v-for="(item,index) in showList"
         :key="index"
         class="panel-songslist-item"
         @click="playSong(item)"
@@ -132,8 +150,10 @@
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.css'
+import axios from 'axios'
 import ftPlayer from './ftPlayer'
-
 
 export default {
   components: {
@@ -143,20 +163,47 @@ export default {
   data() {
     return {
       isError: false,
+      sliders: [],
 
     }
   },
   computed: {
-    ...mapState('list', ['musicList']),
+    ...mapState('list', ['showList']),
     ...mapState('player', ['paused']),
   },
   created() {
     this.getList()
   },
+  mounted() {
+    axios.get('/api/getSiler').then((res) => {
+      console.log(res)
+      this.sliders = res.data.data.slider
+      this.$nextTick().then(() => {
+        const mySwiper = new Swiper('.swiper-container', {
+          // direction: 'vertical',
+          direction: 'horizontal', // 垂直切换选项
+          // loop: true, // 循环模式选项
+          autoplay: true,
 
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination',
+          },
+
+          // 如果需要前进后退按钮
+          // nextButton: '.swiper-button-next',
+          // prevButton: '.swiper-button-prev',
+
+          // // 如果需要滚动条
+          // scrollbar: '.swiper-scrollbar',
+        })
+      })
+    })
+  },
   methods: {
     ...mapActions('list', ['getList']),
     playSong(item) {
+      this.$store.commit('list/GET_MUSIC_LIST')
       this.$store.commit('list/CHANGE_MUSIC', item)
       this.$store.commit('showFtPlayer', true)
       setTimeout(() => {
@@ -172,3 +219,21 @@ export default {
 
 }
 </script>
+<style lang="scss">
+.swiper-slide img{
+  max-width: 100%;
+}
+
+.swiper-pagination-bullet {
+    width: 0.5rem;
+    height: 0.5rem;
+
+    background: #fff;
+    opacity: 0.6;
+    box-shadow: 0 1px 1px #f4f4f4;
+}
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #fff;
+}
+</style>
