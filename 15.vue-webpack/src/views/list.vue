@@ -60,13 +60,17 @@ export default {
   created() {
     const topId = this.$route.params.id
     if (topId) {
-      this.getTopList(topId)
+      this.getTopList(topId).then((info) => {
+        console.log('info', info);
+        this.$store.commit('setGoBackTit', info.ListName)
+      })
     }
   },
 
   methods: {
     ...mapActions('list', ['getTopList']),
     playSong(item) {
+      this.$store.commit('list/GET_MUSIC_LIST')
       this.$store.commit('list/CHANGE_MUSIC', item)
       this.$store.commit('showFtPlayer', true)
       setTimeout(() => {

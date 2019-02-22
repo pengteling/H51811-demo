@@ -52,6 +52,7 @@ export default {
       }).then((res) => {
       console.log(res)
       const songList = res.data.songlist
+      const topListInfo = res.data.topinfo
       const musicList = songList.map((item) => {
         const songData = item.data
         return {
@@ -64,7 +65,7 @@ export default {
       })
       console.log(musicList)
       commit('GET_SHOW_LIST', musicList)
-      return Promise.resolve(musicList)
+      return Promise.resolve(topListInfo)
       // commit('GET_MUSIC_LIST', musicList)
     })
   },

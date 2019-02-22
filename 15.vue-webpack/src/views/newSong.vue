@@ -220,8 +220,12 @@ export default {
 }
 </script>
 <style lang="scss">
+.swiper-slide{
+  text-align: center;
+}
 .swiper-slide img{
   max-width: 100%;
+
 }
 
 .swiper-pagination-bullet {
