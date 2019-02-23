@@ -70,12 +70,17 @@ export default {
   created() {
     jsonp('https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg?g_tk=5381&uin=0&format=jsonp&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=1550466307753', { name: 'MusicJsonCallback' }, (err, data) => {
       console.log(data);
-      this.topList = data.data.topList
+      this.topList = data.data.topList.filter(item => item.id !== 201)
     })
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.bd{
+
+    background: #f4f4f4;
+
+}
 .mod_topic {
     margin: 10px;
 }
@@ -160,9 +165,7 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-body {
-    background: #f4f4f4;
-}
+
 .mod_topic li .topic_cont p {
     font-size: 12px;
     font-family: 'arial'; //等宽字体

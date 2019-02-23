@@ -7,23 +7,36 @@
   >
     <div
       id="imgBoxInfo"
-      class="rank-info-hd"
+      class="img-box"
     >
       <img
         :src="pic"
         onerror="this.onerror=null;this.src='http://m.kugou.com/static/images/index2013/default.png';"
         alt=""
-        style="margin-top:0px;"
+        style="margin-top:-4rem;"
       >
-      <div class="rank-info-time">
-        <span>上次更新时间：{{ updateDate }}</span>
+    </div>
+    <div
+      id="introBox"
+      class="intro-box"
+      :class="{auto:isOpen}"
+      @click="isOpen=!isOpen"
+    >
+      <p>
+        {{ desc }}
+      </p>
+      <div
+        id="introShow"
+        class="intro-icon-box  open-icon"
+        :class="isOpen?'open-icon':'close-icon'"
+      >
+        <i class="intro-icon"></i>
       </div>
     </div>
-
     <!-- start panel-songslist -->
     <ul
       id="panelSongsList"
-      class="panel-songslist panel-songslist-rank"
+      class="panel-songslist"
     >
       <li
         v-for="(item,index) in showList"
@@ -41,13 +54,6 @@
         >
           <i></i>
         </div>
-        <span
-          class="panel-songs-item-num"
-
-          :class="{one: index === 0, two: index === 1 , three: index === 2}"
-        >
-          {{ index + 1 }}
-        </span>
       </li>
     </ul>
     <!-- end panel-songslist -->
@@ -64,6 +70,8 @@ export default {
     return {
       updateDate: '',
       pic: '',
+      desc: '',
+      isOpen: false,
     }
   },
   computed: {
@@ -71,20 +79,21 @@ export default {
     ...mapState('player', ['paused']),
   },
   created() {
-    const topId = this.$route.params.id
+    const topId = this.$route.params.id * 1
     if (topId) {
-      this.getTopList(topId).then((res) => {
+      this.getCdList(topId).then((res) => {
         console.log('info', res);
         // this.$store.commit('setGoBackTit', res.topListInfo.ListName)
-        this.$store.commit('setGoBackTit', '')
-        this.updateDate = res.updateTime
-        this.pic = res.topListInfo.pic_h5
+        this.$store.commit('setGoBackTit', res.dissname)
+        // this.updateDate = res.logo
+        this.pic = res.logo
+        this.desc = res.desc
       })
     }
   },
 
   methods: {
-    ...mapActions('list', ['getTopList']),
+    ...mapActions('list', ['getCdList']),
     playSong(item) {
       this.$store.commit('list/GET_MUSIC_LIST')
       this.$store.commit('list/CHANGE_MUSIC', item)
@@ -99,35 +108,55 @@ export default {
 
 }
 </script>
-<style lang="scss">
-.panel-songslist-rank .panel-songs-item-name {
-    padding-left: 2.0674rem;
+<style lang="scss" scoped>
+.img-box {
+    width: 100%;
+    height: 12.5rem;
+    position: relative;
+    overflow: hidden;
+}
+.img-box img {
+    width: 100%;
 }
 
-.panel-songs-item-num {
-    padding: 0 .5rem;
-    height: 1.0714rem;
-    line-height: 1.0714rem;
-    border-radius: .5rem;
+.intro-box.auto {
+    height: auto;
+}
+
+.intro-box {
+    width: 100%;
+    height: 2.25rem;
+    line-height: 1.8;
+    padding: .5357rem 2.67857rem .5357rem .8929rem;
+    box-shadow: 0 0.1785rem 0.1785rem 0 #f4f4f4;
+    position: relative;
+    overflow: hidden;
+    font-size: 1rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.intro-icon-box {
+    width: 2.1429rem;
+    height: 2rem;
+    line-height: 2.1429rem;
     position: absolute;
-    top: 50%;
-    left: 0;
-    margin-top: -.5357rem;
+    top: .25rem;
+    right: .1786rem;
     text-align: center;
-    font-size: .7143rem;
-    color: #999;
+    cursor: pointer;
+}
+.open-icon .intro-icon {
+    background: url(../images/open_icon.png) no-repeat;
+    background-size: 100%;
+}
+.close-icon .intro-icon {
+    background: url(../images/close_icon.png) no-repeat;
+    background-size: 100%;
+}
+.intro-icon {
+    width: 1.25rem;
+    height: 1.25rem;
     display: inline-block;
-}
-.panel-songs-item-num.one {
-    background: #e80000;
-    color: #fff;
-}
-.panel-songs-item-num.three {
-    background: #f8b300;
-    color: #fff;
-}
-.panel-songs-item-num.two {
-    background: #ff7200;
-    color: #fff;
+    vertical-align: text-bottom;
 }
 </style>

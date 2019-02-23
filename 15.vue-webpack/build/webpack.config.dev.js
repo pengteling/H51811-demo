@@ -26,6 +26,20 @@ const config = {
           )
         .catch(err=>console.log(err))
       })
+      // app.get('/api/getDissList', function(req,res){
+      //   console.log('getDissList')
+      //   var url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
+      //   axios.get(url, {
+      //     headers:{
+      //       referer:'https://y.qq.com/n/yqq/playlist/6664623669.html',
+      //       host:'c.y.qq.com'
+      //     },
+      //     params:req.query
+      //   }).then(response =>
+      //     res.json(response.data)
+      //     )
+      //   .catch(err=>console.log(err))
+      // })
     },
     contentBase:"./dist",
     hot:true,
@@ -80,10 +94,35 @@ const config = {
       },
       '/api/getSiler':{
         target:'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?_=1550727420767&g_tk=5381&uin=0&format=json&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1',
-        changeOrigin:'',
+        changeOrigin:true,
         // pathRewrite:{
         //   '^/api/getLrc':''
         // },
+      },
+      '/api/getDiss':{
+        target:'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api/getDiss':''
+        },
+        bypass:function(req,res,proxyOptions){
+          req.headers.referer = 'https://c.y.qq.com',
+          req.headers.host='c.y.qq.com'
+        }
+      },
+      '/api/getCdlist':{
+
+        // target:'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg',
+        target:'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg',
+
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api/getCdlist':''
+        },
+        bypass:function(req,res,proxyOptions){
+          req.headers.referer = 'https://y.qq.com/n/m/detail/taoge/index.html?ADTAG=newyqq.taoge&id=3602407677',
+          req.headers.host='c.y.qq.com'
+        }
       }
 
       // '/api/vkey':{

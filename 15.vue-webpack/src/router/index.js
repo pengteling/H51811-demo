@@ -10,6 +10,8 @@ const Player = () => import('@/views/player')
 const topList = () => import('@/views/topList')
 // import Player from '@/views/player'
 const list = () => import('@/views/list')
+const plist = () => import('@/views/plist')
+const cdList = () => import('@/views/cdList')
 
 Vue.use(Router)
 const routes = [
@@ -48,6 +50,16 @@ const routes = [
         component: list,
         name: 'list',
 
+      },
+      {
+        path: 'plist',
+        component: plist,
+        name: 'plist',
+      },
+      {
+        path: 'plist/:id',
+        component: cdList,
+        name: 'cdList',
       },
     ],
   },
