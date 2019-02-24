@@ -26,11 +26,12 @@
       >
         <a>歌单</a>
       </router-link>
-      <li class>
-        <a href="http://m.kugou.com/singer/class">
-          歌手
-        </a>
-      </li>
+      <router-link
+        :to="{name:'search'}"
+        tag="li"
+      >
+        <a>搜索</a>
+      </router-link>
     </ul>
   </div>
   <!--end top-nav -->

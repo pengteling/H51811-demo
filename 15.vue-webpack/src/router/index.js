@@ -12,6 +12,7 @@ const topList = () => import('@/views/topList')
 const list = () => import('@/views/list')
 const plist = () => import('@/views/plist')
 const cdList = () => import('@/views/cdList')
+const search = () => import('@/views/search')
 
 Vue.use(Router)
 const routes = [
@@ -60,6 +61,11 @@ const routes = [
         path: 'plist/:id',
         component: cdList,
         name: 'cdList',
+      },
+      {
+        path: '/search',
+        component: search,
+        name: 'search',
       },
     ],
   },
