@@ -22,8 +22,7 @@
       :class="{auto:isOpen}"
       @click="isOpen=!isOpen"
     >
-      <p>
-        {{ desc }}
+      <p v-html="desc">
       </p>
       <div
         id="introShow"
@@ -61,6 +60,7 @@
   </div>
 </template>
 <script>
+/* eslint vue/no-v-html:'off' */
 import { mapState, mapMutations, mapActions } from 'vuex'
 import ftPlayer from './ftPlayer'
 

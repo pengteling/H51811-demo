@@ -30,12 +30,13 @@
             </span>
           </form>
         </div><div
+          v-show="isClick"
           class="search_bar_tip_text"
-          style="display: block;"
         >
           取消
         </div>
       </div><div
+        v-if="isClick"
         class="mod_search_record"
         style=""
       >
@@ -86,9 +87,9 @@
           </a>
         </p>
       </div><div
+        v-if="!isClick"
         id="js_hot_keys"
         class="mod_search_result"
-        style="display: none;"
       >
         <h3
           class="result_tit"
@@ -149,6 +150,19 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      historyKeys: [],
+      hotKeys: [],
+      isClick: false,
+      isSearch: false,
+    }
+  },
+}
+</script>
+
 <style lang="scss" scoped>
 .mod_search_bar {
     background: #f4f4f4;
@@ -185,9 +199,7 @@
     background-size: cover;
     text-indent: -999px;
 }
-.mod_search_bar .icon_delete, .mod_search_bar .search_bar_tip_text {
-    display: none;
-}
+
 
 .mod_search_bar .icon_delete {
     position: absolute;
@@ -199,9 +211,7 @@
     text-indent: -9999px;
     border-radius: 99px;
 }
-.mod_search_bar .icon_delete, .mod_search_bar .search_bar_tip_text {
-    display: none;
-}
+
 .mod_search_bar .search_bar_tip_text {
     padding-right: 10px;
     padding-left: 10px;
@@ -287,4 +297,34 @@
     line-height: 44px;
     color: #33a3f5;
 }
+.mod_search_result {
+    background: #fff;
+    padding: 15px 15px 10px 15px;
+}
+.mod_search_result .result_tit {
+    color: rgba(0,0,0,.6);
+    margin-bottom: 8px;
+}
+.mod_search_result .result_tags {
+    font-size: 0;
+}
+
+.mod_search_result .tag_s {
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    color: #000;
+    border: 1px solid rgba(0,0,0,.6);
+    border-radius: 99px;
+    word-break: keep-all;
+    margin-bottom: 10px;
+    margin-right: 14px;
+}
+.mod_search_result .tag_hot {
+    color: #fc4524;
+    border-color: #fc4524;
+}
+
 </style>
