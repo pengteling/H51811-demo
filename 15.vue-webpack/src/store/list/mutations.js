@@ -57,6 +57,9 @@ export default {
   [types.GET_MUSIC_LIST](state) {
     state.musicList = state.showList
   },
+  [types.GET_MUSIC_LIST_SEARCH](state, resultList) {
+    state.musicList = resultList
+  },
   [types.GET_SHOW_LIST](state, musicList) {
     state.showList = musicList
   },

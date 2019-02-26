@@ -123,6 +123,20 @@ const config = {
           req.headers.referer = 'https://y.qq.com/n/m/detail/taoge/index.html?ADTAG=newyqq.taoge&id=3602407677',
           req.headers.host='c.y.qq.com'
         }
+      },
+      '/api/getSearch':{
+
+        // target:'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg',
+        target:'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp',
+
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api/getSearch':''
+        },
+        bypass:function(req,res,proxyOptions){
+          req.headers.referer = 'https://c.y.qq.com',
+          req.headers.host='c.y.qq.com'
+        }
       }
 
       // '/api/vkey':{

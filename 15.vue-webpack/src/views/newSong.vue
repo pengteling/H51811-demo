@@ -163,21 +163,20 @@ export default {
   data() {
     return {
       isError: false,
-      sliders: [],
+
 
     }
   },
   computed: {
     ...mapState('list', ['showList']),
     ...mapState('player', ['paused']),
+    ...mapState(['sliders']),
   },
   created() {
     this.getList()
   },
   mounted() {
-    axios.get('/api/getSiler').then((res) => {
-      console.log(res)
-      this.sliders = res.data.data.slider
+    this.getSliders().then(() => {
       this.$nextTick().then(() => {
         const mySwiper = new Swiper('.swiper-container', {
           // direction: 'vertical',
@@ -202,6 +201,7 @@ export default {
   },
   methods: {
     ...mapActions('list', ['getList']),
+    ...mapActions(['getSliders']),
     playSong(item) {
       this.$store.commit('list/GET_MUSIC_LIST')
       this.$store.commit('list/CHANGE_MUSIC', item)

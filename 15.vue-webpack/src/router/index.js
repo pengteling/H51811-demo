@@ -32,6 +32,9 @@ const routes = [
       {
         name: 'player',
         component: Player,
+        meta: {
+          hasNoNav: true,
+        },
         path: 'player',
       },
       {
@@ -50,6 +53,9 @@ const routes = [
         path: 'toplist/:id',
         component: list,
         name: 'list',
+        meta: {
+          hasNoNav: true,
+        },
 
       },
       {
@@ -61,6 +67,9 @@ const routes = [
         path: 'plist/:id',
         component: cdList,
         name: 'cdList',
+        meta: {
+          hasNoNav: true,
+        },
       },
       {
         path: '/search',
